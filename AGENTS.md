@@ -71,8 +71,8 @@ they skip silently when no Redis is reachable.
   request; custom per-request data does not flow through.
 - **Rate-limit headers are `limit:window_seconds` pairs** (`"20:1,100:120"`).
   Limits are learned from headers, never hard-coded. Missing `Retry-After`
-  on a 429 is a real Riot behavior (see DESIGN.md §1.3) — backoff must
-  tolerate it.
+  on a 429 is a real Riot behavior (see RIOT-API-NOTES.md §1.3) — backoff
+  must tolerate it.
 - **Models are frozen `Data` classes with liberal `from_api`**; unknown
   fields go into `.raw`. Riot changes payloads without notice (live
   example: `champion-rotations` swapped to `{"sr": [...], "newplayer": [...]}`
@@ -82,6 +82,6 @@ they skip silently when no Redis is reachable.
 
 ## Deep dives
 
-- `DESIGN.md` — full architecture rationale: routing tables, rate-limit
-  strategy matrix, error hierarchy, phase plan.
+- `RIOT-API-NOTES.md` — Riot API research the gem encodes: routing
+  tables, rate-limit grammar, error semantics.
 - `README.md` — public API examples; keep it in sync with any accessor change.
