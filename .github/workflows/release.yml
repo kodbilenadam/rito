@@ -56,14 +56,7 @@ jobs:
             exit 1
           fi
 
-      - uses: rubygems/configure-rubygems-credentials@v2.1.0
-        with:
-          trusted-publisher: true
-
-      - name: Publish
-        run: |
-          gem build rito.gemspec
-          gem push "rito-$(ruby -r./lib/rito/version -e 'puts Rito::VERSION').gem"
+      - uses: rubygems/release-gem@v1
 
       - name: Create GitHub release
         run: gh release create "$GITHUB_REF_NAME" --title "rito $GITHUB_REF_NAME" --generate-notes
