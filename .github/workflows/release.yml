@@ -64,3 +64,8 @@ jobs:
         run: |
           gem build rito.gemspec
           gem push "rito-$(ruby -r./lib/rito/version -e 'puts Rito::VERSION').gem"
+
+      - name: Create GitHub release
+        run: gh release create "$GITHUB_REF_NAME" --title "rito $GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
