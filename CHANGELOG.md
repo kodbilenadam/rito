@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.3.0 (2026-09-05)
+
+Aligned the endpoint surface with the current Riot API reference
+(cross-checked against riotapi-schema). **Breaking:** phantom endpoints
+Riot has removed were dropped, and outdated paths were corrected.
+
+- **Removed (no longer in the API docs)**: summoner-v4 `by_name` /
+  `by_account_id` / `by_summoner_id`; TFT summoner `by_account_id` /
+  `by_summoner_id`; spectator-v5 and spectator-tft-v5 `featured_games`;
+  league-v4 `league(leagueId)` and `entries_by_summoner_id`; TFT league
+  `entries_by_summoner_id`; clash `players_by_summoner_id`; LoR
+  `decks.deck(deck_id)`; tournament-stub `update_code`.
+- **Renamed/fixed paths**: spectator active games (`by-summoner-id` →
+  `by-summoner/{puuid}`, TFT: `by-puuid/{puuid}`), TFT league routing is
+  platform (`na1`), not regional; tournament-v5/stub code paths
+  (`codes/by-code/{code}` → `codes/{code}`); challenges leaderboard param
+  `top`/`page` → `limit`.
+- **Added**: `lol-rso-match-v1` (`client.rso_matches` — RSO bearer token;
+  `ids`, `by_id`, `timeline_by_id`), `val-console-ranked-v1`
+  (`client.val.console_ranked` with required `platform_type:`),
+  match-v5 `replays`, tournament-v5 `games_by_code`, clash
+  `tournament(tournamentId)`, league-v4 `entries_by_puuid`, TFT league
+  `entries_by_puuid` / `entries(tier, division)`, challenges
+  `challenge_config` / `challenge_percentiles`, summoner-v4 `me` (RSO),
+  LoR `decks.create_deck` (POST).
+- **Routing**: VALORANT platform `na1` → `na`; VALORANT platforms accept
+  `esports` (content/match only) and console accepts `br`/`latam`
+  (console match); dropped dead `ph2`/`th2`; added `pbe1` (challenges,
+  status) and `esports`/`esportseu` regionals (tft-match-v1).
+
 ## 0.2.0 (2026-09-05)
 
 - **Riot Sign On (RSO)**: new `Rito::RSO` module implementing the OAuth2

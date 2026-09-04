@@ -12,22 +12,9 @@ module Rito
           )
         end
 
-        def by_name(name, region: nil)
-          Models::Summoner.from_api(
-            get("/lol/summoner/v4/summoners/by-name/#{escape(name)}", region)
-          )
-        end
-
-        def by_account_id(account_id, region: nil)
-          Models::Summoner.from_api(
-            get("/lol/summoner/v4/summoners/by-account/#{escape(account_id)}", region)
-          )
-        end
-
-        def by_summoner_id(summoner_id, region: nil)
-          Models::Summoner.from_api(
-            get("/lol/summoner/v4/summoners/#{escape(summoner_id)}", region)
-          )
+        # Requires the client to be configured with a bearer_token (RSO).
+        def me(region: nil)
+          Models::Summoner.from_api(get('/lol/summoner/v4/summoners/me', region))
         end
       end
     end

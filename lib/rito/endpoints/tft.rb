@@ -11,14 +11,6 @@ module Rito
           Models::Summoner.from_api(get("#{PREFIX}/by-puuid/#{escape(puuid)}", region))
         end
 
-        def by_account_id(account_id, region: nil)
-          Models::Summoner.from_api(get("#{PREFIX}/by-account/#{escape(account_id)}", region))
-        end
-
-        def by_summoner_id(summoner_id, region: nil)
-          Models::Summoner.from_api(get("#{PREFIX}/#{escape(summoner_id)}", region))
-        end
-
         # Requires the client to be configured with a bearer_token (RSO).
         def me(region: nil)
           Models::Summoner.from_api(get("#{PREFIX}/me", region))
@@ -26,14 +18,17 @@ module Rito
       end
 
       class LeagueV1 < Base
-        ROUTING = :regional
+        ROUTING = :platform
 
-        def entries_by_summoner_id(summoner_id, queue: nil, tier: nil, division: nil, region: nil)
+        def entries_by_puuid(puuid, region: nil)
+          get("/tft/league/v1/by-puuid/#{escape(puuid)}", region)
+        end
+
+        def entries(tier, division, queue: nil, page: nil, region: nil)
           params = {}
           params['queue'] = queue if queue
-          params['tier'] = tier if tier
-          params['division'] = division if division
-          get("/tft/league/v1/entries/by-summoner/#{escape(summoner_id)}", region, params: params)
+          params['page'] = page if page
+          get("/tft/league/v1/entries/#{escape(tier)}/#{escape(division)}", region, params: params)
         end
 
         def challenger(region: nil)
@@ -80,14 +75,10 @@ module Rito
         ROUTING = :platform
 
         # Returns nil when the summoner is not in an active game (HTTP 404).
-        def active_game(summoner_id, region: nil)
-          get("/tft/spectator/v5/active-games/by-summoner-id/#{escape(summoner_id)}", region)
+        def active_game(puuid, region: nil)
+          get("/lol/spectator/tft/v5/active-games/by-puuid/#{escape(puuid)}", region)
         rescue NotFound
           nil
-        end
-
-        def featured_games(region: nil)
-          get('/tft/spectator/v5/featured-games', region)
         end
       end
     end

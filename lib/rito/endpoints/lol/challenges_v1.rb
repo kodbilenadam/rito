@@ -10,14 +10,21 @@ module Rito
           get('/lol/challenges/v1/challenges/config', region)
         end
 
+        def challenge_config(challenge_id, region: nil)
+          get("/lol/challenges/v1/challenges/#{escape(challenge_id)}/config", region)
+        end
+
         def percentiles(region: nil)
           get('/lol/challenges/v1/challenges/percentiles', region)
         end
 
-        def leaderboard(challenge_id, level, top: nil, page: nil, region: nil)
+        def challenge_percentiles(challenge_id, region: nil)
+          get("/lol/challenges/v1/challenges/#{escape(challenge_id)}/percentiles", region)
+        end
+
+        def leaderboard(challenge_id, level, limit: nil, region: nil)
           params = {}
-          params['top'] = top if top
-          params['page'] = page if page
+          params['limit'] = limit if limit
           get("/lol/challenges/v1/challenges/#{escape(challenge_id)}/leaderboards/by-level/#{escape(level)}", region,
               params: params)
         end

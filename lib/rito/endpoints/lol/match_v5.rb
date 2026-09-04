@@ -28,6 +28,12 @@ module Rito
         def timeline_by_id(match_id, region: nil)
           get("/lol/match/v5/matches/#{escape(match_id)}/timeline", region)
         end
+
+        def replays(puuid, region: nil)
+          Models::Replay.from_api(
+            get("/lol/match/v5/matches/by-puuid/#{escape(puuid)}/replays", region)
+          )
+        end
       end
     end
   end

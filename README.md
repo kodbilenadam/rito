@@ -199,9 +199,10 @@ entry.raw       # => full payload hash
 
 | Accessor | API |
 | --- | --- |
-| `client.account` | account-v1 |
-| `client.summoner` | summoner-v4 |
-| `client.matches` | match-v5 (matches, matchlist, timeline) |
+| `client.account` | account-v1 (accounts, active shards, region, `me` for RSO) |
+| `client.summoner` | summoner-v4 (`by_puuid`, `me` for RSO) |
+| `client.matches` | match-v5 (matches, matchlist, timeline, replays) |
+| `client.rso_matches` | lol-rso-match-v1 (RSO bearer token; player resolved from the token) |
 | `client.champion_masteries` | champion-mastery-v4 |
 | `client.champions` | champion-v3 (rotations) |
 | `client.leagues` / `client.league_exp` | league-v4 / league-exp-v4 |
@@ -211,12 +212,16 @@ entry.raw       # => full payload hash
 | `client.challenges` | lol-challenges-v1 |
 | `client.tournaments` / `client.tournament_stub` | tournament-v5 / stub-v5 |
 | `client.tft.summoner` / `.leagues` / `.matches` / `.status` / `.spectator` | tft-summoner-v1, tft-league-v1, tft-match-v1, tft-status-v1, spectator-tft-v5 |
-| `client.val.content` / `.matches` / `.console_matches` / `.ranked` / `.status` | val-content-v1, val-match-v1, val-console-match-v1, val-ranked-v1, val-status-v1 |
+| `client.val.content` / `.matches` / `.console_matches` / `.ranked` / `.console_ranked` / `.status` | val-content-v1, val-match-v1, val-console-match-v1, val-ranked-v1, val-console-ranked-v1, val-status-v1 |
 | `client.lor.matches` / `.ranked` / `.status` / `.decks` / `.inventory` | lor-match-v1, lor-ranked-v1, lor-status-v1, lor-deck-v1 / lor-inventory-v1 (RSO) |
 | `client.riftbound` | riftbound-content-v1 |
 
-Note: VALORANT uses its own platform routing values (`na1, eu, ap, kr, latam, br`;
-console: `na, eu, ap`) — the client validates against the right set per product.
+Note: VALORANT uses its own platform routing values (`na, eu, ap, kr,
+latam, br`; console: `na, eu, ap, br, latam`) — the client validates
+against the right set per product. `esports` is a valid platform for
+VALORANT content/match and a valid regional for tft-match-v1 (with
+`esportseu`). The tournament endpoints only exist on the `americas`
+platform — pass `region: :na1` or `:americas`.
 
 ## Testing your own app
 

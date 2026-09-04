@@ -7,14 +7,10 @@ module Rito
         ROUTING = :platform
 
         # Returns nil when the summoner is not in an active game (HTTP 404).
-        def active_game(summoner_id, region: nil)
-          get("/lol/spectator/v5/active-games/by-summoner-id/#{escape(summoner_id)}", region)
+        def active_game(puuid, region: nil)
+          get("/lol/spectator/v5/active-games/by-summoner/#{escape(puuid)}", region)
         rescue NotFound
           nil
-        end
-
-        def featured_games(region: nil)
-          get('/lol/spectator/v5/featured-games', region)
         end
       end
     end

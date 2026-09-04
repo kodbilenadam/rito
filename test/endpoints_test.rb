@@ -12,14 +12,14 @@ class SummonerEndpointTest < Minitest::Test
     WebMock.reset!
   end
 
-  def test_by_name_returns_summoner_model
+  def test_by_puuid_returns_summoner_model
     body = '{"id":"sum-id","accountId":"acc-id","puuid":"puuid-1","name":"Hide on bush",' \
            '"profileIconId":11,"revisionDate":1700000000000,"summonerLevel":1024}'
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Hide%20on%20bush')
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/puuid-1')
       .with(headers: { 'X-Riot-Token' => 'RGAPI-test' })
       .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: body)
 
-    summoner = @client.summoner.by_name('Hide on bush')
+    summoner = @client.summoner.by_puuid('puuid-1')
 
     assert_equal 'sum-id', summoner.id
     assert_equal 'acc-id', summoner.account_id
@@ -40,11 +40,11 @@ class SummonerEndpointTest < Minitest::Test
   end
 
   def test_preserves_unknown_fields_in_raw
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/x')
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/x')
       .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
                  body: '{"name":"x","brandNewField":"future-proof"}')
 
-    summoner = @client.summoner.by_name('x')
+    summoner = @client.summoner.by_puuid('x')
 
     assert_equal 'future-proof', summoner.raw['brandNewField']
   end
@@ -107,41 +107,41 @@ class ErrorHandlingTest < Minitest::Test
   end
 
   def test_404_raises_not_found_with_url
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/ghost')
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/ghost')
       .to_return(status: 404, headers: { 'Content-Type' => 'application/json' },
                  body: '{"message":"Data not found: summoner not found"}')
 
-    error = assert_raises(Rito::NotFound) { client.summoner.by_name('ghost') }
+    error = assert_raises(Rito::NotFound) { client.summoner.by_puuid('ghost') }
 
     assert_equal 404, error.status
     assert_includes error.message, 'summoner not found'
   end
 
   def test_401_raises_unauthorized
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/x').to_return(status: 401)
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/x').to_return(status: 401)
 
-    assert_raises(Rito::Unauthorized) { client.summoner.by_name('x') }
+    assert_raises(Rito::Unauthorized) { client.summoner.by_puuid('x') }
   end
 
   def test_403_raises_forbidden
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/x').to_return(status: 403)
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/x').to_return(status: 403)
 
-    error = assert_raises(Rito::Forbidden) { client.summoner.by_name('x') }
+    error = assert_raises(Rito::Forbidden) { client.summoner.by_puuid('x') }
 
     assert_includes error.message, 'dev keys expire every 24h'
   end
 
   def test_503_raises_service_unavailable_after_retries
-    stub = stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/x')
+    stub = stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/x')
            .to_return(status: 503)
 
-    assert_raises(Rito::ServiceUnavailable) { client.summoner.by_name('x') }
+    assert_raises(Rito::ServiceUnavailable) { client.summoner.by_puuid('x') }
 
     assert_requested(stub, times: 4)
   end
 
   def test_429_is_retried_until_success
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/ok')
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/ok')
       .to_return(status: 429,
                  headers: { 'Retry-After' => '0', 'X-Rate-Limit-Type' => 'application',
                             'X-App-Rate-Limit' => '20:1', 'X-App-Rate-Limit-Count' => '21:1' },
@@ -150,16 +150,16 @@ class ErrorHandlingTest < Minitest::Test
       .then.to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
                       body: '{"name":"ok"}')
 
-    summoner = client.summoner.by_name('ok')
+    summoner = client.summoner.by_puuid('ok')
 
     assert_equal 'ok', summoner.name
   end
 
   def test_429_retries_exhausted_raises_rate_limited
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/x')
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/x')
       .to_return(status: 429, headers: { 'Retry-After' => '0', 'X-Rate-Limit-Type' => 'method' }, body: '{}')
 
-    error = assert_raises(Rito::RateLimited) { client.summoner.by_name('x') }
+    error = assert_raises(Rito::RateLimited) { client.summoner.by_puuid('x') }
 
     assert_equal 429, error.status
     assert_equal 0, error.retry_after

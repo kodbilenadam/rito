@@ -32,6 +32,10 @@ module Rito
       Endpoints::Lol::MatchV5.new(self)
     end
 
+    def rso_matches
+      Endpoints::Lol::RsoMatchV1.new(self)
+    end
+
     def champion_masteries
       Endpoints::Lol::ChampionMasteryV4.new(self)
     end

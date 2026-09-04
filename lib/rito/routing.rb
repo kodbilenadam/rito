@@ -3,21 +3,23 @@
 module Rito
   module Routing
     PLATFORMS = %w[
-      br1 eun1 euw1 jp1 kr la1 la2 me1 na1 oc1 ph2 ru sg2 th2 tr1 tw2 vn2
+      br1 eun1 euw1 jp1 kr la1 la2 me1 na1 oc1 pbe1 ru sg2 tr1 tw2 vn2
     ].freeze
-    REGIONALS = %w[americas asia europe sea].freeze
+    REGIONALS = %w[americas asia esports esportseu europe sea].freeze
 
     CLUSTERS = {
       'americas' => %w[na1 br1 la1 la2],
       'europe' => %w[euw1 eun1 tr1 ru me1],
       'asia' => %w[kr jp1],
-      'sea' => %w[oc1 sg2 tw2 vn2 ph2 th2]
+      'sea' => %w[oc1 sg2 tw2 vn2]
     }.freeze
 
     ACCOUNT_REGIONALS = %w[americas asia europe].freeze
 
-    VALORANT_PLATFORMS = %w[na1 eu ap kr latam br].freeze
-    VALORANT_CONSOLE_PLATFORMS = %w[na eu ap].freeze
+    # esports is accepted by val-content-v1 and val-match-v1 only.
+    VALORANT_PLATFORMS = %w[na eu ap kr latam br esports].freeze
+    # br / latam are accepted by val-console-match-v1 only; console ranked is na / eu / ap.
+    VALORANT_CONSOLE_PLATFORMS = %w[na eu ap br latam].freeze
 
     class << self
       def platform?(value)

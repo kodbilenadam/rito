@@ -39,8 +39,9 @@ module Rito
           get('/lor/deck/v1/decks/me', region)
         end
 
-        def deck(deck_id, region: nil)
-          get("/lor/deck/v1/decks/me/#{escape(deck_id)}", region)
+        # Requires the client to be configured with a bearer_token (RSO).
+        def create_deck(body:, region: nil)
+          post('/lor/deck/v1/decks/me', region, body: body)
         end
       end
 

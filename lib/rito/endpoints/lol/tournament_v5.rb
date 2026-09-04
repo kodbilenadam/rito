@@ -8,7 +8,7 @@ module Rito
         PREFIX = '/lol/tournament/v5'
 
         def code(tournament_code, region: nil)
-          get("#{PREFIX}/codes/by-code/#{escape(tournament_code)}", region)
+          get("#{PREFIX}/codes/#{escape(tournament_code)}", region)
         end
 
         def create_codes(tournament_id:, count: nil, body: {}, region: nil)
@@ -18,7 +18,11 @@ module Rito
         end
 
         def update_code(tournament_code, body: {}, region: nil)
-          put("#{PREFIX}/codes/by-code/#{escape(tournament_code)}", region, body: body)
+          put("#{PREFIX}/codes/#{escape(tournament_code)}", region, body: body)
+        end
+
+        def games_by_code(tournament_code, region: nil)
+          get("#{PREFIX}/games/by-code/#{escape(tournament_code)}", region)
         end
 
         def lobby_events(tournament_code, region: nil)
@@ -39,17 +43,13 @@ module Rito
         PREFIX = '/lol/tournament-stub/v5'
 
         def code(tournament_code, region: nil)
-          get("#{PREFIX}/codes/by-code/#{escape(tournament_code)}", region)
+          get("#{PREFIX}/codes/#{escape(tournament_code)}", region)
         end
 
         def create_codes(tournament_id:, count: nil, body: {}, region: nil)
           params = { 'tournamentId' => tournament_id }
           params['count'] = count if count
           post("#{PREFIX}/codes", region, params: params, body: body)
-        end
-
-        def update_code(tournament_code, body: {}, region: nil)
-          put("#{PREFIX}/codes/by-code/#{escape(tournament_code)}", region, body: body)
         end
 
         def lobby_events(tournament_code, region: nil)

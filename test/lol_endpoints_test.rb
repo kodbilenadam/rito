@@ -62,11 +62,11 @@ class LeagueEndpointTest < Minitest::Test
           '"rank":"II","leagueId":"lg-1","leaguePoints":42,"wins":80,"losses":60,'\
           '"veteran":false,"freshBlood":true,"hotStreak":false,"inactive":false}'
 
-  def test_entries_by_summoner_id
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/s1')
+  def test_entries_by_puuid
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/p1')
       .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: "[#{ENTRY}]")
 
-    entries = @client.leagues.entries_by_summoner_id('s1')
+    entries = @client.leagues.entries_by_puuid('p1')
 
     assert_equal 'DIAMOND', entries.first.tier
     assert_equal 'II', entries.first.rank
@@ -119,10 +119,10 @@ class MiscLolEndpointTest < Minitest::Test
   end
 
   def test_spectator_active_game_returns_nil_on_404
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/spectator/v5/active-games/by-summoner-id/s1')
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/p1')
       .to_return(status: 404, headers: { 'Content-Type' => 'application/json' }, body: '{}')
 
-    assert_nil @client.spectator.active_game('s1')
+    assert_nil @client.spectator.active_game('p1')
   end
 
   def test_status_platform_data
@@ -156,10 +156,10 @@ class MiscLolEndpointTest < Minitest::Test
   end
 
   def test_challenges_leaderboard
-    stub_request(:get, 'https://na1.api.riotgames.com/lol/challenges/v1/challenges/101200/leaderboards/by-level/GRANDMASTER?top=10')
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/challenges/v1/challenges/101200/leaderboards/by-level/GRANDMASTER?limit=10')
       .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{"entries":[]}')
 
-    board = @client.challenges.leaderboard(101_200, 'GRANDMASTER', top: 10)
+    board = @client.challenges.leaderboard(101_200, 'GRANDMASTER', limit: 10)
 
     assert_empty board['entries']
   end

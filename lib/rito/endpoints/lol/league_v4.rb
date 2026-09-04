@@ -24,8 +24,8 @@ module Rito
           )
         end
 
-        def entries_by_summoner_id(summoner_id, region: nil)
-          get("/lol/league/v4/entries/by-summoner/#{escape(summoner_id)}", region)
+        def entries_by_puuid(puuid, region: nil)
+          get("/lol/league/v4/entries/by-puuid/#{escape(puuid)}", region)
             .map { |hash| Models::LeagueEntry.from_api(hash) }
         end
 
@@ -34,12 +34,6 @@ module Rito
           params['page'] = page if page
           get("/lol/league/v4/entries/#{escape(tier)}/#{escape(division)}", region, params: params)
             .map { |hash| Models::LeagueEntry.from_api(hash) }
-        end
-
-        def league(league_id, region: nil)
-          Models::LeagueList.from_api(
-            get("/lol/league/v4/leagues/#{escape(league_id)}", region)
-          )
         end
       end
 

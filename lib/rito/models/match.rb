@@ -67,5 +67,15 @@ module Rito
         )
       end
     end
+
+    Replay = Data.define(:total, :match_file_urls, :raw) do
+      def self.from_api(hash)
+        new(
+          total: hash['total'],
+          match_file_urls: hash['matchFileURLs'],
+          raw: hash.freeze
+        )
+      end
+    end
   end
 end

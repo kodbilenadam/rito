@@ -34,8 +34,8 @@ class TftEndpointTest < Minitest::Test
     assert_equal ['M1'], ids
   end
 
-  def test_league_challenger
-    stub = stub_request(:get, 'https://americas.api.riotgames.com/tft/league/v1/challenger')
+  def test_league_challenger_routes_to_platform
+    stub = stub_request(:get, 'https://na1.api.riotgames.com/tft/league/v1/challenger')
            .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
                       body: '{"leagueId":"t1","tier":"CHALLENGER","entries":[]}')
 
@@ -56,10 +56,10 @@ class TftEndpointTest < Minitest::Test
   end
 
   def test_spectator_active_game_nil_on_404
-    stub_request(:get, 'https://na1.api.riotgames.com/tft/spectator/v5/active-games/by-summoner-id/s1')
+    stub_request(:get, 'https://na1.api.riotgames.com/lol/spectator/tft/v5/active-games/by-puuid/p1')
       .to_return(status: 404, body: '{}')
 
-    assert_nil @client.tft.spectator.active_game('s1')
+    assert_nil @client.tft.spectator.active_game('p1')
   end
 end
 

@@ -59,6 +59,18 @@ they skip silently when no Redis is reachable.
 
 ## Non-obvious invariants (the codebase will not confess these)
 
+- **The endpoint surface mirrors riotapi-schema** (github.com/MingweiSamuel/
+  riotapi-schema, generated daily from the API reference). 0.3.0 purged
+  phantom paths Riot had removed from its docs (summoner-v4 by-name /
+  by-account / by-summonerId, league-v4 /leagues/{id}, spectator
+  featured-games, LoR deck by id, ...). When adding an endpoint, diff
+  against the schema and check its `x-platforms-available`: tournament-v5
+  and tournament-stub-v5 are americas-only, val-console-ranked-v1 requires
+  a `platformType` query param (`playstation` / `xbox`), and
+  lol-rso-match-v1 resolves the player from the bearer token (no puuid
+  param). Platform value drift is real too: VALORANT is `na` (not `na1`),
+  `ph2`/`th2` are gone, `pbe1` and `esports`/`esportseu` exist.
+
 - **RSO token requests are never retried.** `Rito::RSO::Client` uses its own
   bare Faraday connection (no faraday-retry, no rate-limit middleware):
   authorization codes and refresh tokens are one-time, so a replayed POST
