@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3 (2026-09-05)
+
+- CI: publish via `rubygems/release-gem` so releases carry a Sigstore
+  provenance attestation ("Built and signed on GitHub Actions"). No
+  user-facing changes.
+
 ## 0.1.2 (2026-09-05)
 
 - CI: release workflow uses valid `trusted-publisher` input and Node 24
