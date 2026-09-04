@@ -11,6 +11,7 @@ require 'faraday/retry'
 
 # modules
 require_relative 'rito/routing'
+require_relative 'rito/queues'
 require_relative 'rito/errors'
 require_relative 'rito/rate_limiting/header_parser'
 require_relative 'rito/rate_limiting/bucket'

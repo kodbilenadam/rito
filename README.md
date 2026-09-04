@@ -44,6 +44,28 @@ Rito.rate_limiter   # rate limit strategy (default: AdaptiveLimiter)
 client = Rito::Client.new(api_key: "RGAPI-...", region: :kr)
 ```
 
+## Queues
+
+`Rito::Queues` is a frozen, built-in reference for League queue ids as
+they appear in match data (match-v5 `queueId`, the `queue` filter on
+match lists). Snapshot of the League client's game select data (408 ids).
+
+```ruby
+Rito::Queues.find(420).name        # => "Ranked Solo/Duo"
+Rito::Queues[450].mode             # => :aram
+Rito::Queues.find(2450).limited_time # => true (rotating game mode)
+Rito::Queues.select { |q| q.category == :bots }.map(&:name).first(3)
+
+match = client.matches.by_id("NA1_123")
+match.info.queue.name              # => "Ranked Flex" (convenience on MatchInfo)
+```
+
+Each queue is a frozen `Data` object: `id`, `name`, `short_name`,
+`description`, `detailed_description`, `category` (`:pvp`, `:bots`,
+`:custom`), `mode` (`:summoners_rift`, `:aram`, `:tft`, `:jade`,
+`:other`), `limited_time`, `bot_honoring_allowed`. The module includes
+`Enumerable`. Unknown ids return `nil` (Riot adds queues without notice).
+
 ## Riot Sign On (RSO)
 
 `Rito::RSO` implements the OAuth2 authorization code flow against

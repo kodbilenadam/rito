@@ -25,6 +25,10 @@ Riot has removed were dropped, and outdated paths were corrected.
   `entries_by_puuid` / `entries(tier, division)`, challenges
   `challenge_config` / `challenge_percentiles`, summoner-v4 `me` (RSO),
   LoR `decks.create_deck` (POST).
+- **Queues reference**: `Rito::Queues` — frozen snapshot of the League
+  client's game select data (408 queue ids) with name, description,
+  category (`:pvp` / `:bots` / `:custom`), mode, limited-time and bot
+  flags; `MatchInfo#queue` resolves a match's `queueId`.
 - **Routing**: VALORANT platform `na1` → `na`; VALORANT platforms accept
   `esports` (content/match only) and console accepts `br`/`latam`
   (console match); dropped dead `ph2`/`th2`; added `pbe1` (challenges,

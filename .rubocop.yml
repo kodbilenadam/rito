@@ -5,6 +5,8 @@ AllCops:
 
 Layout/LineLength:
   Max: 120
+  Exclude:
+    - lib/rito/queues.rb
 
 Metrics:
   Enabled: false

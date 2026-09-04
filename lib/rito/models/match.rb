@@ -31,6 +31,10 @@ module Rito
     MatchInfo = Data.define(:game_creation, :game_duration, :game_end_timestamp,
                             :game_id, :game_mode, :game_start_timestamp, :game_type,
                             :game_version, :map_id, :participants, :queue_id, :raw) do
+      def queue
+        Rito::Queues.find(queue_id)
+      end
+
       def self.from_api(hash)
         return nil if hash.nil?
 
