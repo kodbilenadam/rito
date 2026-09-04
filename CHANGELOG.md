@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 (2026-09-05)
+
+- Forbidden (403) errors now hint that the API key may be expired
+  (dev keys expire every 24h) instead of raising a bare message.
+
 ## 0.1.0 (2026-09-05)
 
 Initial release.

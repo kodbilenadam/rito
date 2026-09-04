@@ -14,6 +14,10 @@ module Rito
         415 => Rito::UnsupportedMediaType
       }.freeze
 
+      # 403 from Riot almost always means the key is bad, and dev keys
+      # expire every 24h — users never guess this from a bare "Forbidden".
+      KEY_STALENESS_HINT = ' (check the API key: dev keys expire every 24h)'
+
       def initialize(app, client:)
         super(app)
         @client = client
@@ -74,7 +78,9 @@ module Rito
         detail = parsed.is_a?(Hash) ? (parsed['message'] || parsed.dig('status', 'message')) : nil
 
         base = "#{env.status} #{env.method.to_s.upcase} #{env.url}"
-        detail ? "#{base}: #{detail}" : base
+        text = detail ? "#{base}: #{detail}" : base
+        text += KEY_STALENESS_HINT if env.status == 403
+        text
       end
     end
   end

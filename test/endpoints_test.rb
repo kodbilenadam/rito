@@ -126,7 +126,9 @@ class ErrorHandlingTest < Minitest::Test
   def test_403_raises_forbidden
     stub_request(:get, 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/x').to_return(status: 403)
 
-    assert_raises(Rito::Forbidden) { client.summoner.by_name('x') }
+    error = assert_raises(Rito::Forbidden) { client.summoner.by_name('x') }
+
+    assert_includes error.message, 'dev keys expire every 24h'
   end
 
   def test_503_raises_service_unavailable_after_retries
