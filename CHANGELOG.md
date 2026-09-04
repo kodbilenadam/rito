@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 (2026-09-05)
+
+- CI: release workflow uses valid `trusted-publisher` input and Node 24
+  actions. No user-facing changes.
+
 ## 0.1.1 (2026-09-05)
 
 - Forbidden (403) errors now hint that the API key may be expired
