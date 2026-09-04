@@ -1,0 +1,89 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://kr.api.riotgames.com/lol/status/v4/platform-data
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Riot-Token:
+      - "<RIOT_API_KEY>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 04 Sep 2026 21:10:59 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+      Access-Control-Allow-Methods:
+      - GET, PUT, DELETE, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Range
+      Age:
+      - '26'
+      Cache-Control:
+      - max-age=60
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=Y33ZGyeetnY8TUf0Cm1wRFqNm9n3r097eH04TXegyio-1788556259.1231034-1.0.1.1-CZGzOGrcbXWLtXF9lQZf8RX5nzKrYREuMqrampn1I1KgB8LMDtq..w3FZ4CzwOmGVZInKdxpRRLTII9jvMbTy0mvyameR3.0AspfE2ZY5yTOtbxo1PLdviP1QvSeMZW8;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Fri,
+        04 Sep 2026 21:40:59 GMT
+      Etag:
+      - '"5072b8a4f8a29bb8fd65d2436178a232"'
+      Last-Modified:
+      - Fri, 04 Sep 2026 16:02:33 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Origin
+      - accept-encoding
+      X-Amz-Id-2:
+      - us7+WpmOZfPnt7aMqJf+MsTEU63yIlWEAHo6nQug6VVVsMW9lXWW3dJqgqwWC/oM1sqD8oVskh8=
+      X-Amz-Meta-B2sum:
+      - 688f65a5ee39c82db12f7652ad1e9f75
+      X-Amz-Replication-Status:
+      - COMPLETED
+      X-Amz-Request-Id:
+      - 2TGV9E9133ENMW3W
+      X-Amz-Server-Side-Encryption:
+      - AES256
+      X-Amz-Version-Id:
+      - xKPUt8IeLl8MO0cjOUhTwd4_Jf1.DRFk
+      X-App-Rate-Limit:
+      - 100:120,20:1
+      X-App-Rate-Limit-Count:
+      - 2:120,2:1
+      X-Method-Rate-Limit:
+      - 20000:10,1200000:600
+      X-Method-Rate-Limit-Count:
+      - 1:10,1:600
+      X-Riot-Cdn:
+      - Cloudflare
+      Cf-Ray:
+      - a35ffbeb8aacfd2b-SIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IktSIiwibmFtZSI6IktvcmVhIiwibG9jYWxlcyI6WyJhcl9BRSIsImNzX0NaIiwiZGVfREUiLCJlbF9HUiIsImVuX0FVIiwiZW5fR0IiLCJlbl9QSCIsImVuX1NHIiwiZW5fVVMiLCJlc19BUiIsImVzX0VTIiwiZXNfTVgiLCJmcl9GUiIsImh1X0hVIiwiaWRfSUQiLCJpdF9JVCIsImphX0pQIiwia29fS1IiLCJwbF9QTCIsInB0X0JSIiwicm9fUk8iLCJydV9SVSIsInRoX1RIIiwidHJfVFIiLCJ2aV9WTiIsInpoX01ZIiwiemhfVFciXSwibWFpbnRlbmFuY2VzIjpbXSwiaW5jaWRlbnRzIjpbeyJpZCI6MTM1MDAsImNyZWF0ZWRfYXQiOiIyMDI2LTA5LTA0VDE2OjAxOjMwLjA5MzQ0OCswMDowMCIsInVwZGF0ZWRfYXQiOm51bGwsImFyY2hpdmVfYXQiOm51bGwsInRpdGxlcyI6W3sibG9jYWxlIjoiZW5fVVMiLCJjb250ZW50IjoiTG9naW4gSXNzdWVzIn0seyJsb2NhbGUiOiJhcl9BRSIsImNvbnRlbnQiOiLZhdi02KfZg9mEINiq2LPYrNmK2YQg2KfZhNiv2K7ZiNmEIn0seyJsb2NhbGUiOiJjc19DWiIsImNvbnRlbnQiOiJQb3TDrcW+ZSBzIHDFmWlobGHFoW92w6Fuw61tIn0seyJsb2NhbGUiOiJkZV9ERSIsImNvbnRlbnQiOiJQcm9ibGVtZSBiZWkgZGVyIEFubWVsZHVuZyJ9LHsibG9jYWxlIjoiZWxfR1IiLCJjb250ZW50IjoizpjOrc68zrHPhM6xIM+Dz43Ovc60zrXPg863z4IifSx7ImxvY2FsZSI6ImVuX0FVIiwiY29udGVudCI6IkxvZ2luIElzc3VlcyJ9LHsibG9jYWxlIjoiZW5fR0IiLCJjb250ZW50IjoiTG9naW4gSXNzdWVzIn0seyJsb2NhbGUiOiJlc19FUyIsImNvbnRlbnQiOiJQcm9ibGVtYXMgZGUgaW5pY2lvIGRlIHNlc2nDs24ifSx7ImxvY2FsZSI6ImVzX01YIiwiY29udGVudCI6IlByb2JsZW1hcyBwYXJhIGluaWNpYXIgc2VzacOzbiJ9LHsibG9jYWxlIjoiZnJfRlIiLCJjb250ZW50IjoiUHJvYmzDqG1lcyBkZSBjb25uZXhpb24ifSx7ImxvY2FsZSI6Imh1X0hVIiwiY29udGVudCI6IkJlamVsZW50a2V6w6lzaSBoaWLDoWsifSx7ImxvY2FsZSI6ImlkX0lEIiwiY29udGVudCI6Ik1hc2FsYWggTG9naW4ifSx7ImxvY2FsZSI6Iml0X0lUIiwiY29udGVudCI6IlByb2JsZW1pIGRpIGFjY2Vzc28ifSx7ImxvY2FsZSI6ImphX0pQIiwiY29udGVudCI6IuODreOCsOOCpOODs+OBq+mWouOBmeOCi+WVj+mhjCJ9LHsibG9jYWxlIjoia29fS1IiLCJjb250ZW50Ijoi66Gc6re47J24IOusuOygnCJ9LHsibG9jYWxlIjoibXNfTVkiLCJjb250ZW50IjoiSXN1IExvZyBNYXN1ayJ9LHsibG9jYWxlIjoicGxfUEwiLCJjb250ZW50IjoiUHJvYmxlbXkgeiBsb2dvd2FuaWVtIn0seyJsb2NhbGUiOiJwdF9CUiIsImNvbnRlbnQiOiJQcm9ibGVtYXMgbm8gbG9naW4ifSx7ImxvY2FsZSI6InJvX1JPIiwiY29udGVudCI6IlByb2JsZW1lIGxhIGNvbmVjdGFyZSJ9LHsibG9jYWxlIjoicnVfUlUiLCJjb250ZW50Ijoi0J/RgNC+0LHQu9C10LzRiyDRgdC+INCy0YXQvtC00L7QvCJ9LHsibG9jYWxlIjoidGhfVEgiLCJjb250ZW50Ijoi4Lib4Lix4LiN4Lir4Liy4LiB4Liy4Lij4Lil4LmH4Lit4LiB4Lit4Li04LiZIn0seyJsb2NhbGUiOiJ0cl9UUiIsImNvbnRlbnQiOiJHaXJpxZ8gWWFwbWEgU29ydW5sYXLEsSJ9LHsibG9jYWxlIjoidmlfVk4iLCJjb250ZW50IjoiQ8OhYyBT4buxIEPhu5EgxJDEg25nIE5o4bqtcCJ9LHsibG9jYWxlIjoiemhfVFciLCJjb250ZW50Ijoi55m75YWl5ZWP6aGMIn0seyJsb2NhbGUiOiJlbl9QSCIsImNvbnRlbnQiOiJMb2dpbiBJc3N1ZXMifSx7ImxvY2FsZSI6ImVuX1NHIiwiY29udGVudCI6IkxvZ2luIElzc3VlcyJ9XSwidXBkYXRlcyI6W3siaWQiOjI0MTI5LCJjcmVhdGVkX2F0IjoiMjAyNi0wOS0wNFQxNjowMTozMC4wOTM0NDcrMDA6MDAiLCJ1cGRhdGVkX2F0IjoiMjAyNi0wOS0wNFQxNjowMToyOCswMDowMCIsInB1Ymxpc2giOnRydWUsImF1dGhvciI6IlJpb3QgR2FtZXMiLCJ0cmFuc2xhdGlvbnMiOlt7ImxvY2FsZSI6ImVuX1VTIiwiY29udGVudCI6IldlJ3ZlIGlkZW50aWZpZWQgYSBwcm9ibGVtIGltcGFjdGluZyBsb2dpbnMgZm9yIHNvbWUgcGxheWVycywgYW5kIGFyZSB3b3JraW5nIG9uIGEgZml4LiJ9LHsibG9jYWxlIjoiYXJfQUUiLCJjb250ZW50Ijoi2YTZgtivINix2LXYr9mG2Kcg2YjYrNmI2K8g2YXYtNmD2YTYqSDYqtik2KvYsSDYudmE2Ykg2LnZhdmE2YrYp9iqINiq2LPYrNmK2YQg2KfZhNiv2K7ZiNmEINmE2K/ZiSDYqNi52LYg2KfZhNmE2KfYudio2YrZhtiMINmI2YbYudmF2YQg2LnZhNmJINil2YrYrNin2K8g2K3ZhCDZhNmH2KcuIn0seyJsb2NhbGUiOiJjc19DWiIsImNvbnRlbnQiOiJKc21lIHNpIHbEm2RvbWkgcHJvYmzDqW11IHMgcMWZaWhsYcWhb3bDoW7DrW0sIG5hIG9wcmF2xJsgamnFviBwcmFjdWplbWUuIn0seyJsb2NhbGUiOiJkZV9ERSIsImNvbnRlbnQiOiJVbnMgaXN0IGVpbiBQcm9ibGVtIGJla2FubnQsIGRhcyBiZWkgZWluaWdlbiBTcGllbGVybiBQcm9ibGVtZSBiZWkgZGVyIEFubWVsZHVuZyB2ZXJ1cnNhY2h0LiBXaXIgYXJiZWl0ZW4gYmVyZWl0cyBhbiBlaW5lciBMw7ZzdW5nLiJ9LHsibG9jYWxlIjoiZWxfR1IiLCJjb250ZW50IjoizpXOvc+Ezr/PgM6vz4POsc68zrUgzq3Ovc6xIM+Az4HPjM6yzrvOt868zrEgz4DOv8+FIM61z4DOt8+BzrXOrM62zrXOuSDPhM63IM+Dz43Ovc60zrXPg863IM6zzrnOsSDOvM61z4HOuc66zr/Pjc+CIM+AzrHOr866z4TOtc+CIM66zrHOuSDPgM+Bzr/Pg8+AzrHOuM6/z43OvM61IM69zrEgz4TOvyDOtM65zr/Pgc64z47Pg86/z4XOvM61LiJ9LHsibG9jYWxlIjoiZW5fQVUiLCJjb250ZW50IjoiV2UndmUgaWRlbnRpZmllZCBhIHByb2JsZW0gaW1wYWN0aW5nIGxvZ2lucyBmb3Igc29tZSBwbGF5ZXJzLCBhbmQgYXJlIHdvcmtpbmcgb24gYSBmaXguIn0seyJsb2NhbGUiOiJlbl9HQiIsImNvbnRlbnQiOiJXZSd2ZSBpZGVudGlmaWVkIGEgcHJvYmxlbSBpbXBhY3RpbmcgbG9naW5zIGZvciBzb21lIHBsYXllcnMsIGFuZCBhcmUgd29ya2luZyBvbiBhIGZpeC4ifSx7ImxvY2FsZSI6ImVzX0VTIiwiY29udGVudCI6IkhlbW9zIGRldGVjdGFkbyBxdWUgYWxndW5vcyBqdWdhZG9yZXMgZXN0w6FuIGV4cGVyaW1lbnRhbmRvIHByb2JsZW1hcyBkZSBpbmljaW8gZGUgc2VzacOzbiB5IGVzdGFtb3MgdHJhYmFqYW5kbyBwYXJhIHNvbHVjaW9uYXJsby4ifSx7ImxvY2FsZSI6ImVzX01YIiwiY29udGVudCI6IkVzdGFtb3MgYWwgdGFudG8gZGUgdW4gcHJvYmxlbWEgcXVlIGFmZWN0YSBlbCBpbmljaW8gZGUgc2VzacOzbiBkZSBhbGd1bm9zIGp1Z2Fkb3JlcyB5IGVzdGFtb3MgdHJhYmFqYW5kbyBlbiB1bmEgc29sdWNpw7NuLiJ9LHsibG9jYWxlIjoiZnJfRlIiLCJjb250ZW50IjoiTm91cyBzb21tZXMgY29uc2NpZW50cyBk4oCZdW4gcHJvYmzDqG1lIGVtcMOqY2hhbnQgY2VydGFpbnMgam91ZXVycyBkZSBzZSBjb25uZWN0ZXIgZXQgbm91cyB0cmF2YWlsbG9ucyDDoCBsZSBjb3JyaWdlci4ifSx7ImxvY2FsZSI6Imh1X0hVIiwiY29udGVudCI6IlByb2Jsw6ltw6F0IMOpc3psZWx0w7xuayBhIGJlamVsZW50a2V6w6lzbsOpbCBuw6low6FueSBqw6F0w6lrb3MgZXNldMOpYmVuLiBNw6FyIGRvbGdvenVuayBhIG1lZ29sZMOhc29uLiJ9LHsibG9jYWxlIjoiaWRfSUQiLCJjb250ZW50IjoiS2FtaSBtZW5lbXVrYW4gYWRhbnlhIG1hc2FsYWggeWFuZyBiZXJkYW1wYWsgcGFkYSBsb2dpbiBiYWdpIGJlYmVyYXBhIHBlbWFpbiwgZGFuIHNlZGFuZyBiZXJ1cGF5YSBtZW1wZXJiYWlraW55YS4ifSx7ImxvY2FsZSI6Iml0X0lUIiwiY29udGVudCI6IlNpYW1vIGEgY29ub3NjZW56YSBkaSB1biBwcm9ibGVtYSBjaGUgaW50ZXJlc3NhIGwnYWNjZXNzbyBwZXIgYWxjdW5pIHV0ZW50aSBlIHN0aWFtbyBsYXZvcmFuZG8gYSB1bmEgc29sdXppb25lLiJ9LHsibG9jYWxlIjoiamFfSlAiLCJjb250ZW50Ijoi5LiA6YOo44Gu44OX44Os44Kk44Ok44O844Gr44GK44GE44Gm44Ot44Kw44Kk44Oz44Gr5b2x6Z+/44GZ44KL5ZWP6aGM44GM56K66KqN44GV44KM44Gm44GK44KK44CB54++5Zyo5L+u5q2j5a++5b+c5Lit44Gn44GZ44CCIn0seyJsb2NhbGUiOiJrb19LUiIsImNvbnRlbnQiOiLsnbzrtoAg7ZSM66CI7J207Ja07J2YIOuhnOq3uOyduOyXkCDsmIHtlqXsnYQg66+47LmY64qUIOusuOygnOulvCDtmZXsnbjtlZjqs6Ag7ZiE7J6sIO2VtOqysCDspJHsnoXri4jri6QuIn0seyJsb2NhbGUiOiJtc19NWSIsImNvbnRlbnQiOiJLYW1pIHRlbGFoIG1lbmdlbmFsIHBhc3RpIG1hc2FsYWggeWFuZyBtZW1wZW5nYXJ1aGkgbG9nIG1hc3VrIHVudHVrIHNlc2V0ZW5nYWggcGVtYWluIGRhbiBzZWRhbmcgYmVydXNhaGEgdW50dWsgbWVtYmV0dWxrYW5ueWEuIn0seyJsb2NhbGUiOiJwbF9QTCIsImNvbnRlbnQiOiJXaWVteSBvIHByb2JsZW1pZSB6IGxvZ293YW5pZW0gaSBwcmFjdWplbXkgbmFkIGplZ28gcm96d2nEhXphbmllbS4ifSx7ImxvY2FsZSI6InB0X0JSIiwiY29udGVudCI6IklkZW50aWZpY2Ftb3MgdW0gcHJvYmxlbWEgcXVlIGVzdMOhIGFmZXRhbmRvIG8gbG9naW4gcGFyYSBhbGd1bnMgam9nYWRvcmVzIGUgasOhIGVzdGFtb3MgdHJhYmFsaGFuZG8gZW0gdW1hIHNvbHXDp8Ojby4ifSx7ImxvY2FsZSI6InJvX1JPIiwiY29udGVudCI6IkFtIGlkZW50aWZpY2F0IG8gcHJvYmxlbcSDIGNhcmUgYWZlY3RlYXrEgyBjb25lY3RhcmVhIHBlbnRydSB1bmlpIGp1Y8SDdG9yaSDImWkgbHVjcsSDbSBsYSBvIHJlbWVkaWVyZS4ifSx7ImxvY2FsZSI6InJ1X1JVIiwiY29udGVudCI6ItCc0Ysg0LfQvdCw0LXQvCwg0YfRgtC+INGDINC90LXQutC+0YLQvtGA0YvRhSDQuNCz0YDQvtC60L7QsiDQstC+0LfQvdC40LrQsNC10YIg0L/RgNC+0LHQu9C10LzQsCDRgdC+INCy0YXQvtC00L7QvCwg0Lgg0YDQsNCx0L7RgtCw0LXQvCDQvdCw0LQg0LXQtSDRgNC10YjQtdC90LjQtdC8LiJ9LHsibG9jYWxlIjoidGhfVEgiLCJjb250ZW50Ijoi4LmA4Lij4Liy4LiX4Lij4Liy4Lia4LiW4Li24LiH4Lib4Lix4LiN4Lir4Liy4LiX4Li14LmI4Liq4LmI4LiH4Lic4Lil4LiB4Lij4Liw4LiX4Lia4LiV4LmI4Lit4LiB4Liy4Lij4Lil4LmH4Lit4LiB4Lit4Li04LiZ4LiC4Lit4LiH4Lic4Li54LmJ4LmA4Lil4LmI4LiZ4Lia4Liy4LiH4Liq4LmI4Lin4LiZIOC5geC4peC4sOC4geC4s+C4peC4seC4h+C4lOC4s+C5gOC4meC4tOC4meC4geC4suC4o+C5geC4geC5ieC5hOC4guC4reC4ouC4ueC5iCJ9LHsibG9jYWxlIjoidHJfVFIiLCJjb250ZW50IjoiQmF6xLEgb3l1bmN1bGFyxLFuIGdpcmnFn2xlcmluaSBldGtpbGV5ZW4gYmlyIHNvcnVuIHRlc3BpdCBldHRpayB2ZSBidW51biBpw6dpbiBiaXIgZMO8emVsdG1lIMO8emVyaW5kZSDDp2FsxLHFn8SxeW9ydXouIn0seyJsb2NhbGUiOiJ2aV9WTiIsImNvbnRlbnQiOiJDaMO6bmcgdMO0aSDEkcOjIHjDoWMgbmjhuq1uIG3hu5l0IHPhu7EgY+G7kSBsacOqbiBxdWFuIMSR4bq/biDEkcSDbmcgbmjhuq1wIHbhu5tpIG3hu5l0IHPhu5EgbmfGsOG7nWkgY2jGoWkgdsOgIMSRYW5nIHTDrG0gY8OhY2gga2jhuq9jIHBo4bulYy4ifSx7ImxvY2FsZSI6InpoX1RXIiwiY29udGVudCI6IuaIkeWAkeeZvOePvumDqOWIhueOqeWutumBremBh+acg+W9semfv+eZu+WFpeeahOWVj+mhjO+8jOato+WcqOWKquWKm+S/ruato+S4reOAgiJ9LHsibG9jYWxlIjoiZW5fUEgiLCJjb250ZW50IjoiV2UndmUgaWRlbnRpZmllZCBhIHByb2JsZW0gaW1wYWN0aW5nIGxvZ2lucyBmb3Igc29tZSBwbGF5ZXJzLCBhbmQgYXJlIHdvcmtpbmcgb24gYSBmaXguIn0seyJsb2NhbGUiOiJlbl9TRyIsImNvbnRlbnQiOiJXZSd2ZSBpZGVudGlmaWVkIGEgcHJvYmxlbSBpbXBhY3RpbmcgbG9naW5zIGZvciBzb21lIHBsYXllcnMsIGFuZCBhcmUgd29ya2luZyBvbiBhIGZpeC4ifV0sInB1Ymxpc2hfbG9jYXRpb25zIjpbImdhbWUiLCJyaW90Y2xpZW50IiwicmlvdHN0YXR1cyJdfV0sInBsYXRmb3JtcyI6WyJhbmRyb2lkIiwiaW9zIl0sImluY2lkZW50X3NldmVyaXR5Ijoid2FybmluZyJ9XX0=
+  recorded_at: Fri, 04 Sep 2026 21:10:59 GMT
+recorded_with: VCR 6.4.0

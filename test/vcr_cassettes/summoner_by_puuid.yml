@@ -1,0 +1,137 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/Hide%20on%20bush/KR1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Riot-Token:
+      - "<RIOT_API_KEY>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 04 Sep 2026 21:10:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Headers:
+      - User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+      Access-Control-Allow-Methods:
+      - GET, PUT, DELETE, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Range
+      Set-Cookie:
+      - __cf_bm=4PyvRWBSycxv_VL04eb8p0NoH0kOwPeot0HiB8iaO7c-1788556257.921576-1.0.1.1-9g0utNK6SuekpAZ.MlOfVMqicwx_DFqD1fGB7ELQR1vwe1pfKmYQwA6CF7YS7pYaqNRQfJlaTu46b2oTSisFh7CEAbFrPTwsBtNxX4nNfQrolCLkWLen7bIcZLvn1ChK;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Fri,
+        04 Sep 2026 21:40:58 GMT
+      Vary:
+      - Accept-Encoding
+      X-App-Rate-Limit:
+      - 100:120,20:1
+      X-App-Rate-Limit-Count:
+      - 2:120,2:1
+      X-Method-Rate-Limit:
+      - 1000:60
+      X-Method-Rate-Limit-Count:
+      - 2:60
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - a35ffbe40e615c98-SIN
+    body:
+      encoding: ASCII-8BIT
+      string: '{"puuid":"hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA","gameName":"Hide
+        on bush","tagLine":"KR1"}'
+  recorded_at: Fri, 04 Sep 2026 21:10:57 GMT
+- request:
+    method: get
+    uri: https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Riot-Token:
+      - "<RIOT_API_KEY>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 04 Sep 2026 21:10:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Headers:
+      - User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+      Access-Control-Allow-Methods:
+      - GET, PUT, DELETE, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Range
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Set-Cookie:
+      - __cf_bm=EAwNygstGMrb1wKrMszoLy6U0SDTt3l7fPUwKxXIlTA-1788556258.2986946-1.0.1.1-iY6ZZlQySG.rsdU14POhyDoCpDgJg4BZnyo92.f0BYpoivxjrpcBfV8Oqnvlc95nPx9UAGEqGbYHfbB9vEKl8sHPzksGU_hTsHpIM9NOhklh4_aof0B7GxAmLlriztBu;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Fri,
+        04 Sep 2026 21:40:58 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Vary:
+      - Access-Control-Request-Headers
+      - accept-encoding
+      X-App-Rate-Limit:
+      - 100:120,20:1
+      X-App-Rate-Limit-Count:
+      - 1:120,1:1
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Method-Rate-Limit:
+      - 2000:60
+      X-Method-Rate-Limit-Count:
+      - 1:60
+      X-Xss-Protection:
+      - '0'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - a35ffbe65e808241-SIN
+    body:
+      encoding: ASCII-8BIT
+      string: '{"puuid":"hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA","profileIconId":6,"revisionDate":1788543886621,"summonerLevel":931}'
+  recorded_at: Fri, 04 Sep 2026 21:10:58 GMT
+recorded_with: VCR 6.4.0

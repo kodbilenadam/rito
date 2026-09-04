@@ -1,0 +1,19 @@
+# secrets
+.env
+
+# build artifacts
+/pkg/
+/*.gem
+/doc/
+/coverage/
+
+# bundler
+/.bundle/
+Gemfile.lock
+/vendor/bundle/
+
+# editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/

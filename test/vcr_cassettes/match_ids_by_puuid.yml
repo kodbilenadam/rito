@@ -1,0 +1,137 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/Hide%20on%20bush/KR1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Riot-Token:
+      - "<RIOT_API_KEY>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 04 Sep 2026 21:10:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Headers:
+      - User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+      Access-Control-Allow-Methods:
+      - GET, PUT, DELETE, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Range
+      Set-Cookie:
+      - __cf_bm=Hdw_jmyH0DMjevLHe5tXIinAf_z8OwcS6WjzUdVhwrU-1788556258.5660937-1.0.1.1-p2sDF5onvUiDa2Ld1ADe68TXqbwRfPlud8bmDJENBmtWNSuVwTmostMS7VWN2DAuGGX2Hxt0RP.Bw6cHXDBo6gpWrFuHrcotIQsxpp_preKucfrGMSY13KF38N1cnpIR;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Fri,
+        04 Sep 2026 21:40:58 GMT
+      Vary:
+      - Accept-Encoding
+      X-App-Rate-Limit:
+      - 100:120,20:1
+      X-App-Rate-Limit-Count:
+      - 3:120,3:1
+      X-Method-Rate-Limit:
+      - 1000:60
+      X-Method-Rate-Limit-Count:
+      - 3:60
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - a35ffbe80bc6ed99-SIN
+    body:
+      encoding: ASCII-8BIT
+      string: '{"puuid":"hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA","gameName":"Hide
+        on bush","tagLine":"KR1"}'
+  recorded_at: Fri, 04 Sep 2026 21:10:58 GMT
+- request:
+    method: get
+    uri: https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA/ids?count=3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Riot-Token:
+      - "<RIOT_API_KEY>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 04 Sep 2026 21:10:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Headers:
+      - User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+      Access-Control-Allow-Methods:
+      - GET, PUT, DELETE, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Range
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Set-Cookie:
+      - __cf_bm=695MslchxK9TG75CNEwuDRVse3Oe0aE3FnBUpy6nX94-1788556258.8381405-1.0.1.1-sSzI01ay72AF.OlIDkNUotFpySmE_HE6ccoPj41wXWyU2jysAvprFi7Ml0funayVQxBlkBmF7hwq8A9RCekxRcFSUcD3G4JQo.2zSq1hBUj2oG041dF.MdmxrFAdTzbV;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Fri,
+        04 Sep 2026 21:40:58 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Vary:
+      - Access-Control-Request-Headers
+      - accept-encoding
+      X-App-Rate-Limit:
+      - 100:120,20:1
+      X-App-Rate-Limit-Count:
+      - 4:120,1:1
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Method-Rate-Limit:
+      - '2000:10'
+      X-Method-Rate-Limit-Count:
+      - '1:10'
+      X-Xss-Protection:
+      - '0'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - a35ffbe9baa03fbd-SIN
+    body:
+      encoding: ASCII-8BIT
+      string: '["KR_8368666881","KR_8368600422","KR_8368529562"]'
+  recorded_at: Fri, 04 Sep 2026 21:10:58 GMT
+recorded_with: VCR 6.4.0
