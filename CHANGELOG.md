@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 (2026-09-05)
+
+- **Riot Sign On (RSO)**: new `Rito::RSO` module implementing the OAuth2
+  authorization code flow against `auth.riotgames.com`:
+  `authorization_url` (with generated CSRF state), `exchange_code`,
+  `refresh`, `userinfo`, and `verify_id_token` (RS256 signature +
+  iss/aud/exp validation via `/jwks.json`, with key-rotation-aware
+  refetch). Token requests support `client_secret` basic, a static
+  `client_assertion` (the RSO "100 year token"), or minted private-key
+  JWT client assertions from an RSA `private_key`. Zero new runtime
+  dependencies (stdlib `openssl`).
+
 ## 0.1.3 (2026-09-05)
 
 - CI: publish via `rubygems/release-gem` so releases carry a Sigstore

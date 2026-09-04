@@ -59,6 +59,12 @@ they skip silently when no Redis is reachable.
 
 ## Non-obvious invariants (the codebase will not confess these)
 
+- **RSO token requests are never retried.** `Rito::RSO::Client` uses its own
+  bare Faraday connection (no faraday-retry, no rate-limit middleware):
+  authorization codes and refresh tokens are one-time, so a replayed POST
+  `/token` can burn the grant. RSO failures raise `Rito::RSO::OAuthError`
+  (carries `error_code`/`error_description`), not the API 4xx hierarchy.
+
 - **5xx must not raise inside response middleware.** `RiotErrors` skips 5xx;
   `faraday-retry` (registered above it) retries internally, and the final
   `ServerError`/`ServiceUnavailable` is raised in `Client#request` after

@@ -44,6 +44,81 @@ Rito.rate_limiter   # rate limit strategy (default: AdaptiveLimiter)
 client = Rito::Client.new(api_key: "RGAPI-...", region: :kr)
 ```
 
+## Riot Sign On (RSO)
+
+`Rito::RSO` implements the OAuth2 authorization code flow against
+`https://auth.riotgames.com`. Register a client with Riot first; the
+redirect URI must be on its allowlist.
+
+```ruby
+rso = Rito::RSO::Client.new(
+  client_id: ENV.fetch("RIOT_RSO_CLIENT_ID"),
+  client_secret: ENV.fetch("RIOT_RSO_CLIENT_SECRET"), # or client_assertion: / private_key:
+  redirect_uri: "https://app.example.com/oauth2-callback"
+)
+
+# 1. Send the player to Riot; persist request.state to compare on callback
+login = rso.authorization_url(login_hint: "na1|daguava")
+login.url     # => "https://auth.riotgames.com/authorize?..."
+login.state
+
+# 2. Exchange the ?code= query param from the callback for tokens
+tokens = rso.exchange_code(params[:code])
+tokens.access_token   # Bearer token for RSO resources (encrypted, opaque)
+tokens.id_token       # signed JWT identity token
+tokens.refresh_token  # signed JWT, self-contained
+tokens.expires_in     # 600
+
+# 3. Identify the player
+me = rso.userinfo(tokens.access_token)
+me.sub    # player sub claim
+me.cpid   # "NA1" when the cpid scope was requested
+
+# 4. Rotate when the access token expires
+tokens = rso.refresh(tokens.refresh_token)
+```
+
+Newer RSO clients authenticate with private-key JWT instead of a secret
+(the gem mints a fresh signed assertion per token request):
+
+```ruby
+rso = Rito::RSO::Client.new(
+  client_id: ENV.fetch("RIOT_RSO_CLIENT_ID"),
+  private_key: OpenSSL::PKey::RSA.new(ENV.fetch("RIOT_RSO_PRIVATE_KEY")),
+  redirect_uri: "https://app.example.com/oauth2-callback"
+)
+```
+
+or pass the pre-signed client assertion (the "100 year token") via
+`client_assertion:` and treat it like a password.
+
+### Verifying the ID token
+
+```ruby
+claims = rso.verify_id_token(tokens.id_token)
+claims["sub"] # => signature (RS256 via /jwks.json) + iss/aud/exp validated
+```
+
+`verify_id_token` caches the JWKS document and refetches it once when a
+`kid` is unknown (Riot rotates keypairs without disabling old ones).
+Any failure raises `Rito::RSO::InvalidToken`. Token and userinfo failures
+raise `Rito::RSO::OAuthError` with `.error_code` / `.error_description`.
+
+### RSO configuration
+
+```ruby
+Rito::RSO.client_id        # default: ENV["RIOT_RSO_CLIENT_ID"]
+Rito::RSO.client_secret    # default: ENV["RIOT_RSO_CLIENT_SECRET"]
+Rito::RSO.client_assertion # default: ENV["RIOT_RSO_CLIENT_ASSERTION"]
+Rito::RSO.private_key
+Rito::RSO.redirect_uri     # default: ENV["RIOT_RSO_REDIRECT_URI"]
+Rito::RSO.scope            # default: "openid" (add cpid / offline_access)
+```
+
+Per-instance kwargs override the module config. Token requests are never
+retried (authorization codes and refresh tokens are one-time), so handle
+failures explicitly.
+
 ## Routing values
 
 Endpoints declare whether they are platform-routed (`na1`, `kr`, ...) or
