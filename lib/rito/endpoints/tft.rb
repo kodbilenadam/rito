@@ -31,16 +31,22 @@ module Rito
           get("/tft/league/v1/entries/#{escape(tier)}/#{escape(division)}", region, params: params)
         end
 
-        def challenger(region: nil)
-          get('/tft/league/v1/challenger', region)
+        def challenger(queue: nil, region: nil)
+          params = {}
+          params['queue'] = queue if queue
+          get('/tft/league/v1/challenger', region, params: params)
         end
 
-        def grandmaster(region: nil)
-          get('/tft/league/v1/grandmaster', region)
+        def grandmaster(queue: nil, region: nil)
+          params = {}
+          params['queue'] = queue if queue
+          get('/tft/league/v1/grandmaster', region, params: params)
         end
 
-        def master(region: nil)
-          get('/tft/league/v1/master', region)
+        def master(queue: nil, region: nil)
+          params = {}
+          params['queue'] = queue if queue
+          get('/tft/league/v1/master', region, params: params)
         end
 
         def rated_ladder_top(queue, region: nil)
@@ -51,10 +57,12 @@ module Rito
       class MatchV1 < Base
         ROUTING = :regional
 
-        def ids_by_puuid(puuid, count: nil, start: nil, region: nil)
+        def ids_by_puuid(puuid, count: nil, start: nil, start_time: nil, end_time: nil, region: nil)
           params = {}
           params['count'] = count if count
           params['start'] = start if start
+          params['startTime'] = start_time if start_time
+          params['endTime'] = end_time if end_time
           get("/tft/match/v1/matches/by-puuid/#{escape(puuid)}/ids", region, params: params)
         end
 

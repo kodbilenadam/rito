@@ -40,4 +40,48 @@ class RoutingTest < Minitest::Test
     assert_equal 'americas', Rito::Routing.regional_for_account(:americas)
     assert_equal 'americas', Rito::Routing.regional_for_account(:na1)
   end
+
+  def test_pbe1_is_a_platform_and_me1_escalates_to_europe
+    assert_equal 'pbe1.api.riotgames.com', Rito::Routing.host_for(:pbe1)
+    assert_equal 'europe', Rito::Routing.resolve(:regional, :me1)
+  end
+
+  def test_dead_platforms_are_rejected
+    %i[ph2 th2].each do |value|
+      assert_raises(ArgumentError) { Rito::Routing.host_for(value) }
+      assert_raises(ArgumentError) { Rito::Routing.resolve(:platform, value) }
+    end
+  end
+
+  def test_esports_regionals_are_valid
+    assert_equal 'esports.api.riotgames.com', Rito::Routing.host_for(:esports)
+    assert_equal 'esportseu.api.riotgames.com', Rito::Routing.host_for(:esportseu)
+    assert_equal 'esports', Rito::Routing.resolve(:regional, :esports)
+  end
+
+  def test_apac_is_a_valid_regional
+    assert_equal 'apac.api.riotgames.com', Rito::Routing.host_for(:apac)
+    assert_equal 'apac', Rito::Routing.resolve(:regional, :apac)
+  end
+
+  def test_resolve_valorant_platform
+    assert_equal 'na', Rito::Routing.resolve(:valorant_platform, :na)
+    assert_equal 'kr', Rito::Routing.resolve(:valorant_platform, 'KR')
+    assert_equal 'esports', Rito::Routing.resolve(:valorant_platform, :esports)
+  end
+
+  def test_resolve_valorant_platform_rejects_lol_and_dead_platforms
+    assert_raises(ArgumentError) { Rito::Routing.resolve(:valorant_platform, :na1) }
+    assert_raises(ArgumentError) { Rito::Routing.resolve(:valorant_platform, :ph2) }
+  end
+
+  def test_resolve_valorant_console_platform_accepts_br_and_latam
+    assert_equal 'br', Rito::Routing.resolve(:valorant_console_platform, :br)
+    assert_equal 'latam', Rito::Routing.resolve(:valorant_console_platform, :latam)
+  end
+
+  def test_resolve_valorant_console_platform_rejects_lol_platforms
+    assert_raises(ArgumentError) { Rito::Routing.resolve(:valorant_console_platform, :na1) }
+    assert_raises(ArgumentError) { Rito::Routing.resolve(:valorant_console_platform, :kr) }
+  end
 end

@@ -148,6 +148,37 @@ class MiscLolEndpointTest < Minitest::Test
     assert_equal %w[CODE1 CODE2], codes
   end
 
+  def test_tournament_code_gets_corrected_path
+    stub = stub_request(:get, 'https://na1.api.riotgames.com/lol/tournament/v5/codes/CODE1')
+           .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                      body: '{"code":"CODE1","tournamentId":99}')
+
+    code = @client.tournaments.code('CODE1')
+
+    assert_requested stub
+    assert_equal 'CODE1', code['code']
+  end
+
+  def test_tournament_update_code_puts_json_body
+    stub = stub_request(:put, 'https://na1.api.riotgames.com/lol/tournament/v5/codes/CODE1')
+           .with(body: { 'mapType' => 'HOWLING_ABYSS' })
+           .to_return(status: 204)
+
+    @client.tournaments.update_code('CODE1', body: { 'mapType' => 'HOWLING_ABYSS' })
+
+    assert_requested stub
+  end
+
+  def test_tournament_stub_code_gets_corrected_path
+    stub = stub_request(:get, 'https://na1.api.riotgames.com/lol/tournament-stub/v5/codes/CODE1')
+           .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                      body: '{"code":"CODE1"}')
+
+    @client.tournament_stub.code('CODE1')
+
+    assert_requested stub
+  end
+
   def test_tournament_stub_uses_stub_path
     stub_request(:post, 'https://na1.api.riotgames.com/lol/tournament-stub/v5/providers')
       .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: '1234')

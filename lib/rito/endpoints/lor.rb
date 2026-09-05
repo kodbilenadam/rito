@@ -54,16 +54,6 @@ module Rito
         end
       end
     end
-
-    class Riftbound < Base
-      ROUTING = :regional
-
-      def contents(locale: nil, region: nil)
-        params = {}
-        params['locale'] = locale if locale
-        get('/riftbound/content/v1/contents', region, params: params)
-      end
-    end
   end
 
   module Lor

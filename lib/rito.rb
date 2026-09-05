@@ -46,6 +46,7 @@ require_relative 'rito/endpoints/lol/tournament_v5'
 require_relative 'rito/endpoints/tft'
 require_relative 'rito/endpoints/valorant'
 require_relative 'rito/endpoints/lor'
+require_relative 'rito/endpoints/riftbound'
 require_relative 'rito/version'
 
 module Rito

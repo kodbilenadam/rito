@@ -242,7 +242,8 @@ Note: VALORANT uses its own platform routing values (`na, eu, ap, kr,
 latam, br`; console: `na, eu, ap, br, latam`) — the client validates
 against the right set per product. `esports` is a valid platform for
 VALORANT content/match and a valid regional for tft-match-v1 (with
-`esportseu`). The tournament endpoints only exist on the `americas`
+`esportseu`); `apac` is a valid regional for lor-match-v1. The
+tournament endpoints only exist on the `americas`
 platform — pass `region: :na1` or `:americas`.
 
 ## Testing your own app

@@ -5,7 +5,8 @@ module Rito
     PLATFORMS = %w[
       br1 eun1 euw1 jp1 kr la1 la2 me1 na1 oc1 pbe1 ru sg2 tr1 tw2 vn2
     ].freeze
-    REGIONALS = %w[americas asia esports esportseu europe sea].freeze
+    # esports/esportseu are accepted by tft-match-v1; apac by lor-match-v1.
+    REGIONALS = %w[americas apac asia esports esportseu europe sea].freeze
 
     CLUSTERS = {
       'americas' => %w[na1 br1 la1 la2],

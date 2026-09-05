@@ -132,8 +132,11 @@ def build_probes(fix)
     ['val recent-matches', ->(c) { c.val.matches.recent_by_queue('competitive', region: :na) }, false],
     ['val ranked leaderboard (synth)', ->(c) { c.val.ranked.leaderboard(FAKE_UUID, size: 1, region: :na) }, true],
     ['val status platform-data', ->(c) { c.val.status.platform_data(region: :na) }, false],
-    ['val console matchlist', ->(c) { c.val.console_matches.ids_by_puuid(FAKE_UUID, region: :na) }, true],
+    ['val console matchlist', lambda { |c|
+      c.val.console_matches.ids_by_puuid(FAKE_UUID, platform_type: 'xbox', region: :na)
+    }, true],
     ['val console match by-id', ->(c) { c.val.console_matches.by_id(FAKE_UUID, region: :na) }, true],
+    ['val console recent-matches', ->(c) { c.val.console_matches.recent_by_queue('competitive', region: :na) }, false],
     ['val console ranked', lambda { |c|
       c.val.console_ranked.leaderboard(FAKE_UUID, platform_type: 'xbox', size: 1, region: :na)
     }, true],

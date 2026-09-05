@@ -33,11 +33,16 @@ module Rito
         ROUTING = :valorant_console_platform
 
         def by_id(match_id, region: nil)
-          get("/val/console/match/v1/matches/#{escape(match_id)}", region)
+          get("/val/match/console/v1/matches/#{escape(match_id)}", region)
         end
 
-        def ids_by_puuid(puuid, region: nil)
-          get("/val/console/match/v1/matchlists/by-puuid/#{escape(puuid)}", region)
+        def ids_by_puuid(puuid, platform_type:, region: nil)
+          get("/val/match/console/v1/matchlists/by-puuid/#{escape(puuid)}", region,
+              params: { 'platformType' => platform_type })
+        end
+
+        def recent_by_queue(queue, region: nil)
+          get("/val/match/console/v1/recent-matches/by-queue/#{escape(queue)}", region)
         end
       end
 

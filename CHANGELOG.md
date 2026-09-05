@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.3.1 (2026-09-05)
+
+Fixed endpoint diffs against the current riotapi-schema (last generated
+2026-08-05):
+
+- **val-console-match-v1 paths were wrong** (`/val/console/match/v1/...` →
+  `/val/match/console/v1/...`) — every console match call would 404.
+  The matchlist now sends the required `platformType` query param
+  (`ids_by_puuid` gained a required `platform_type:` keyword) and
+  `recent_by_queue` was added (GET recent-matches/by-queue).
+- TFT match `ids_by_puuid` gained `start_time:` / `end_time:` params.
+- TFT league `challenger` / `grandmaster` / `master` gained an optional
+  `queue:` param.
+- `apac` is now a valid regional (lor-match-v1).
+- The Riftbound endpoint class moved out of the LoR file into its own
+  `endpoints/riftbound.rb` (no API change).
+- CI: GitHub releases now use the tagged version's CHANGELOG section as
+  the release body instead of auto-generated notes.
+
 ## 0.3.0 (2026-09-05)
 
 Aligned the endpoint surface with the current Riot API reference

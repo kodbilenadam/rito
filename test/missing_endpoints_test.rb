@@ -190,10 +190,29 @@ class ValorantConsoleRankedTest < Minitest::Test
   end
 
   def test_accepts_console_br_platform_for_matches
-    stub = stub_request(:get, 'https://br.api.riotgames.com/val/console/match/v1/matches/M1')
+    stub = stub_request(:get, 'https://br.api.riotgames.com/val/match/console/v1/matches/M1')
            .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}')
 
     @client.val.console_matches.by_id('M1', region: :br)
+
+    assert_requested stub
+  end
+
+  def test_console_matchlist_sends_required_platform_type
+    stub = stub_request(
+      :get, 'https://ap.api.riotgames.com/val/match/console/v1/matchlists/by-puuid/p1?platformType=playstation'
+    ).to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{"puuid":"p1"}')
+
+    @client.val.console_matches.ids_by_puuid('p1', platform_type: 'playstation', region: :ap)
+
+    assert_requested stub
+  end
+
+  def test_console_recent_matches_by_queue
+    stub = stub_request(:get, 'https://latam.api.riotgames.com/val/match/console/v1/recent-matches/by-queue/competitive')
+           .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{"currentTime":"1"}')
+
+    @client.val.console_matches.recent_by_queue('competitive', region: :latam)
 
     assert_requested stub
   end
@@ -226,5 +245,49 @@ class LorCreateDeckTest < Minitest::Test
 
     assert_requested stub
     assert_equal 'deck-id-1', deck_id
+  end
+end
+
+# Regression guard for the 0.3.0 purge: phantom methods Riot removed from its
+# docs must not come back silently.
+class RemovedEndpointsTest < Minitest::Test
+  def setup
+    @client = Rito::Client.new(api_key: 'RGAPI-test', region: :na1,
+                               rate_limiter: Rito::RateLimiting::NullLimiter.new)
+  end
+
+  def test_summoner_v4_phantom_lookups_are_gone
+    %i[by_name by_account_id by_summoner_id].each do |method|
+      assert_raises(NoMethodError) { @client.summoner.public_send(method, 'x') }
+    end
+  end
+
+  def test_tft_summoner_phantom_lookups_are_gone
+    %i[by_account_id by_summoner_id].each do |method|
+      assert_raises(NoMethodError) { @client.tft.summoner.public_send(method, 'x') }
+    end
+  end
+
+  def test_featured_games_are_gone
+    assert_raises(NoMethodError) { @client.spectator.featured_games }
+    assert_raises(NoMethodError) { @client.tft.spectator.featured_games }
+  end
+
+  def test_league_phantom_methods_are_gone
+    assert_raises(NoMethodError) { @client.leagues.league('lg-1') }
+    assert_raises(NoMethodError) { @client.leagues.entries_by_summoner_id('s1') }
+    assert_raises(NoMethodError) { @client.tft.leagues.entries_by_summoner_id('s1') }
+  end
+
+  def test_clash_players_by_summoner_id_is_gone
+    assert_raises(NoMethodError) { @client.clash.players_by_summoner_id('s1') }
+  end
+
+  def test_lor_deck_by_id_is_gone
+    assert_raises(NoMethodError) { @client.lor.decks.deck('deck-1') }
+  end
+
+  def test_tournament_stub_update_code_is_gone
+    assert_raises(NoMethodError) { @client.tournament_stub.update_code('CODE1') }
   end
 end
