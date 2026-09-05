@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.0 (2026-09-05)
 
 - **Breaking:** LoL `leagues.entries` now requires `queue` before `tier` and
   `division`, matching the live API path.
@@ -8,7 +8,7 @@
   automatically, and unsupported clusters are rejected.
 - Account routing normalizes SEA platform values (including `sg2`) to `asia`.
   VALORANT routing values work as client defaults.
-- Explicit API-key or bearer credentials no longer inherit the other global
+- **Breaking:** Explicit API-key or bearer credentials no longer inherit the other global
   credential. Explicit `nil` clears credentials; mixed credentials are rejected.
 - Transport failures retry before conversion to Rito errors. Non-JSON HTTP
   error bodies preserve the HTTP error class; 403 hints include routing and access.
