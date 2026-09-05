@@ -9,7 +9,9 @@ hierarchy.
 Riot routes every request through two kinds of hosts. An endpoint is bound to one of the two — this is the single most common integration bug, so it becomes a first-class concept in the gem, not a string the user passes around.
 
 **Platform routing values** (service topology, e.g. `na1.api.riotgames.com`):
-`BR1, EUN1, EUW1, JP1, KR, LA1, LA2, ME1, NA1, OC1, PH2, RU, SG2, TH2, TR1, TW2, VN2`
+`BR1, EUN1, EUW1, JP1, KR, LA1, LA2, ME1, NA1, OC1, PBE1, RU, SG2, TR1, TW2, VN2`
+(PH2/TH2 no longer exist after Riot's SEA consolidation; PBE1 serves
+lol-challenges-v1, lol-status-v4 and tft-status-v1.)
 
 **Regional (cluster) routing values** (e.g. `americas.api.riotgames.com`):
 `AMERICAS, ASIA, EUROPE, SEA`
@@ -21,7 +23,7 @@ Platform → regional cluster mapping (used for automatic escalation, e.g. resol
 | AMERICAS | NA1, BR1, LA1, LA2 |
 | EUROPE | EUW1, EUN1, TR1, RU, ME1 |
 | ASIA | KR, JP1 |
-| SEA | OC1, SG2, TW2, VN2, PH2, TH2 |
+| SEA | OC1, SG2, TW2, VN2 |
 
 Gotchas encoded into the gem:
 
@@ -87,3 +89,27 @@ Hard rules the gem follows:
 | 429 | Rate limit exceeded | throttle + retry per §1.3, then raise `Rito::RateLimited` |
 | 500 | Internal server error | retry (idempotent GETs) then raise `Rito::ServerError` |
 | 503 | Service unavailable | retry with backoff, then raise `Rito::ServiceUnavailable` |
+
+## 1.6 Live-tested key behavior (2026-09, `scripts/live_matrix.rb`)
+
+Findings from probing every endpoint with both a development key and a
+production personal key (fixtures bootstrapped from `Hide on bush#KR1`):
+
+- **PUUIDs are encrypted per API key.** A puuid minted by one key
+  (`by-riot-id`) cannot be read by another key — Riot answers
+  `400 "Bad Request - Exception decrypting <puuid>"` on every
+  puuid-in-path endpoint. Bootstrap fixtures with the same key you
+  query with. Numeric ids (match ids, tournament ids) are not encrypted.
+- **Product entitlements gate whole products with a bare 403** (no
+  message detail), identically for dev and personal prod keys:
+  TFT (tft-*), VALORANT (val-*, incl. console), LoR (lor-*),
+  Riftbound, tournament-v5 **and** tournament-stub-v5 (need the
+  tournament key product), and account-v1 active-shards.
+- **`league-v4 entries/{tier}/{division}` is 403 for personal keys**
+  while `league-exp-v4 entries/...` works — Riot restricts the
+  full-ladder listing endpoint; use league-exp for ladder browsing.
+- tournament-v5/stub read endpoints 403 for non-tournament keys even
+  for a syntactically invalid code; there is no "reachable" signal
+  without the tournament product.
+- RSO endpoints (all `/me`, `lol-rso-match-v1`, `lor-deck-v1`,
+  `lor-inventory-v1`) need an RSO bearer token, not an API key.
