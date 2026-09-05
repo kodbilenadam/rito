@@ -15,7 +15,7 @@ module Rito
           scope: hash['scope'],
           expires_in: hash['expires_in'],
           sub_sid: hash['sub_sid'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
 
@@ -30,7 +30,7 @@ module Rito
 
     Userinfo = Data.define(:sub, :cpid, :raw) do
       def self.from_api(hash)
-        new(sub: hash['sub'], cpid: hash['cpid'], raw: hash.freeze)
+        new(sub: hash['sub'], cpid: hash['cpid'], raw: Models.deep_freeze(hash))
       end
     end
 

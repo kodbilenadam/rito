@@ -15,43 +15,29 @@ module Rito
 
       def call(env)
         limiter = @client.limiter
-        key = @client.api_key
-        return @app.call(env) if limiter.nil? || key.nil?
-
-        attempts = 0
-        started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        key = @client.api_key || @client.bearer_token
+        retries = 0
+        request_body = env.body
         begin
-          limiter.acquire!(key: key, region: region_from(env), bucket: bucket_from(env))
-          response = @app.call(env)
-          emit(env, response.status, started, attempts)
-          response
-        rescue Rito::RateLimited => e
-          emit(env, e.status, started, attempts, error: e.class.name)
-          attempts += 1
-          retry if attempts <= @client.max_retries
+          limiter&.acquire!(key: key, region: region_from(env), bucket: bucket_from(env))
+          env.body = request_body
+          env.request.context[:attempts] += 1 if env.request.context
+          @app.call(env)
+        rescue Rito::RateLimited
+          retries += 1
+          retry if retries <= @client.max_retries
           raise
         end
       end
 
       private
 
-      def emit(env, status, started, attempts, error: nil)
-        Instrumentation.emit(
-          http_method: env.method,
-          url: env.url.to_s,
-          status: status,
-          attempts: attempts,
-          duration_ms: ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started) * 1000).round(2),
-          error: error
-        )
-      end
-
       def region_from(env)
         env.url.host.to_s.split('.').first
       end
 
       def bucket_from(env)
-        env.url.path.split('/').first(2).join('/')
+        env.url.path.split('/').reject(&:empty?).first(2).join('/')
       end
     end
   end

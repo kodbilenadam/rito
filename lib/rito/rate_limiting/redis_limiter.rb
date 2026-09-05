@@ -24,21 +24,45 @@ module Rito
           end
         end
         for i = 3, #KEYS do
-          local idx = i - 3
-          local limit = tonumber(ARGV[idx * 2 + 1])
-          local window = tonumber(ARGV[idx * 2 + 2])
-          if limit then
-            local count = redis.call('INCR', KEYS[i])
-            if count == 1 then
-              redis.call('EXPIRE', KEYS[i], window)
-            end
-            if count > limit then
-              redis.call('DECR', KEYS[i])
-              return 0
-            end
+          local limit = tonumber(ARGV[(i - 3) * 2 + 1])
+          if tonumber(redis.call('GET', KEYS[i]) or '0') >= limit then
+            return 0
+          end
+        end
+        for i = 3, #KEYS do
+          redis.call('INCR', KEYS[i])
+          if redis.call('PTTL', KEYS[i]) < 0 then
+            redis.call('EXPIRE', KEYS[i], ARGV[(i - 3) * 2 + 2])
           end
         end
         return 1
+      LUA
+
+      BLOCK_SCRIPT = <<~LUA
+        local streak = math.min(redis.call('INCR', KEYS[2]), 6)
+        redis.call('EXPIRE', KEYS[2], 600)
+        local delay = tonumber(ARGV[1])
+        if delay < 0 then
+          delay = math.min(2 ^ (streak - 1), 32) * 1000 + tonumber(ARGV[2])
+        end
+        if delay > 0 and redis.call('PTTL', KEYS[1]) < delay then
+          redis.call('SET', KEYS[1], '1', 'PX', delay)
+        end
+      LUA
+
+      SYNC_COUNT_SCRIPT = <<~LUA
+        local current = redis.call('GET', KEYS[1])
+        local count = tonumber(ARGV[1])
+        if not current then
+          redis.call('SET', KEYS[1], count, 'EX', ARGV[2])
+        elseif count > tonumber(current) then
+          local ttl = redis.call('PTTL', KEYS[1])
+          if ttl > 0 then
+            redis.call('SET', KEYS[1], count, 'PX', ttl)
+          else
+            redis.call('SET', KEYS[1], count, 'EX', ARGV[2])
+          end
+        end
       LUA
 
       def initialize(redis:, sleeper: Kernel.method(:sleep))
@@ -61,11 +85,12 @@ module Rito
         status = response.status
         prefix = prefix_for(key, region)
 
+        sync_limits!(prefix, bucket, headers)
+        sync_counts!(prefix, bucket, headers)
         if status == 429
           block!(prefix, bucket, headers)
         else
-          sync_limits!(prefix, bucket, headers)
-          sync_counts!(prefix, bucket, headers)
+          @redis.del("#{prefix}:block:streak", "#{prefix}:m:#{bucket}:block:streak")
         end
       end
 
@@ -99,15 +124,14 @@ module Rito
       end
 
       def block!(prefix, bucket, headers)
-        retry_after = HeaderParser.retry_after(headers) || 2
-        case HeaderParser.limit_type(headers)
-        when :application
-          @redis.set("#{prefix}:block", '1', ex: retry_after)
-        when :method, :service
-          @redis.set("#{prefix}:m:#{bucket}:block", '1', ex: retry_after)
-        else
-          @redis.set("#{prefix}:m:#{bucket}:block", '1', ex: retry_after)
-        end
+        retry_after = HeaderParser.retry_after(headers)
+        block_key = if HeaderParser.limit_type(headers) == :application
+                      "#{prefix}:block"
+                    else
+                      "#{prefix}:m:#{bucket}:block"
+                    end
+        @redis.eval(BLOCK_SCRIPT, keys: [block_key, "#{block_key}:streak"],
+                                  argv: [retry_after ? retry_after * 1000 : -1, rand(500)])
       end
 
       def sync_limits!(prefix, bucket, headers)
@@ -123,13 +147,13 @@ module Rito
       end
 
       def sync_counts!(prefix, bucket, headers)
-        sync_scope_counts!(prefix, HeaderParser.app_counts(headers), "#{prefix}:app")
-        sync_scope_counts!(prefix, HeaderParser.method_counts(headers), "#{prefix}:m:#{bucket}")
+        sync_scope_counts!(HeaderParser.app_counts(headers), "#{prefix}:app")
+        sync_scope_counts!(HeaderParser.method_counts(headers), "#{prefix}:m:#{bucket}")
       end
 
-      def sync_scope_counts!(_prefix, counts, counter_prefix)
+      def sync_scope_counts!(counts, counter_prefix)
         counts.each do |count, window|
-          @redis.set("#{counter_prefix}:#{window}", count.to_s, ex: window)
+          @redis.eval(SYNC_COUNT_SCRIPT, keys: ["#{counter_prefix}:#{window}"], argv: [count, window])
         end
       end
 

@@ -4,7 +4,8 @@ module Rito
   module Endpoints
     module Lol
       class TournamentV5 < Base
-        ROUTING = :platform
+        ROUTING = :regional
+        REGIONS = %w[americas].freeze
         PREFIX = '/lol/tournament/v5'
 
         def code(tournament_code, region: nil)
@@ -39,7 +40,8 @@ module Rito
       end
 
       class TournamentStubV5 < Base
-        ROUTING = :platform
+        ROUTING = :regional
+        REGIONS = %w[americas].freeze
         PREFIX = '/lol/tournament-stub/v5'
 
         def code(tournament_code, region: nil)

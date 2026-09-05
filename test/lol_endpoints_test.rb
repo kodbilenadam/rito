@@ -136,7 +136,7 @@ class MiscLolEndpointTest < Minitest::Test
   end
 
   def test_tournament_create_codes_posts_json_body
-    stub = stub_request(:post, 'https://na1.api.riotgames.com/lol/tournament/v5/codes?count=2&tournamentId=99')
+    stub = stub_request(:post, 'https://americas.api.riotgames.com/lol/tournament/v5/codes?count=2&tournamentId=99')
            .with(body: { 'mapType' => 'SUMMONERS_RIFT' })
            .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
                       body: '["CODE1","CODE2"]')
@@ -149,7 +149,7 @@ class MiscLolEndpointTest < Minitest::Test
   end
 
   def test_tournament_code_gets_corrected_path
-    stub = stub_request(:get, 'https://na1.api.riotgames.com/lol/tournament/v5/codes/CODE1')
+    stub = stub_request(:get, 'https://americas.api.riotgames.com/lol/tournament/v5/codes/CODE1')
            .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
                       body: '{"code":"CODE1","tournamentId":99}')
 
@@ -160,7 +160,7 @@ class MiscLolEndpointTest < Minitest::Test
   end
 
   def test_tournament_update_code_puts_json_body
-    stub = stub_request(:put, 'https://na1.api.riotgames.com/lol/tournament/v5/codes/CODE1')
+    stub = stub_request(:put, 'https://americas.api.riotgames.com/lol/tournament/v5/codes/CODE1')
            .with(body: { 'mapType' => 'HOWLING_ABYSS' })
            .to_return(status: 204)
 
@@ -170,7 +170,7 @@ class MiscLolEndpointTest < Minitest::Test
   end
 
   def test_tournament_stub_code_gets_corrected_path
-    stub = stub_request(:get, 'https://na1.api.riotgames.com/lol/tournament-stub/v5/codes/CODE1')
+    stub = stub_request(:get, 'https://americas.api.riotgames.com/lol/tournament-stub/v5/codes/CODE1')
            .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
                       body: '{"code":"CODE1"}')
 
@@ -180,7 +180,7 @@ class MiscLolEndpointTest < Minitest::Test
   end
 
   def test_tournament_stub_uses_stub_path
-    stub_request(:post, 'https://na1.api.riotgames.com/lol/tournament-stub/v5/providers')
+    stub_request(:post, 'https://americas.api.riotgames.com/lol/tournament-stub/v5/providers')
       .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: '1234')
 
     assert_equal 1234, @client.tournament_stub.create_provider(body: { 'region' => 'NA', 'url' => 'https://x.dev' })

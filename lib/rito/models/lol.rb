@@ -17,7 +17,7 @@ module Rito
           champion_points_since_last_level: hash['championPointsSinceLastLevel'],
           last_play_time: hash['lastPlayTime'],
           tokens_earned: hash['tokensEarned'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end
@@ -27,7 +27,7 @@ module Rito
         new(
           sr: hash['sr'],
           newplayer: hash['newplayer'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end
@@ -52,7 +52,7 @@ module Rito
           fresh_blood: hash['freshBlood'],
           hot_streak: hash['hotStreak'],
           inactive: hash['inactive'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
 
@@ -72,7 +72,7 @@ module Rito
           name: hash['name'],
           queue: hash['queue'],
           entries: hash['entries'].to_a.freeze,
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end

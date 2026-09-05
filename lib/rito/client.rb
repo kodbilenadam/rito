@@ -5,10 +5,13 @@ module Rito
     attr_reader :api_key, :bearer_token, :region, :limiter, :max_retries,
                 :open_timeout, :timeout, :adapter
 
-    def initialize(api_key: nil, bearer_token: nil, region: nil, rate_limiter: nil,
+    UNSET = Object.new.freeze
+    private_constant :UNSET
+
+    def initialize(api_key: UNSET, bearer_token: UNSET, region: nil, rate_limiter: nil,
                    max_retries: nil, open_timeout: nil, timeout: nil, adapter: nil)
-      @api_key = api_key || Rito.api_key
-      @bearer_token = bearer_token || Rito.bearer_token
+      @api_key = api_key.equal?(UNSET) ? (Rito.api_key if bearer_token.equal?(UNSET)) : api_key
+      @bearer_token = bearer_token.equal?(UNSET) ? (Rito.bearer_token if api_key.equal?(UNSET)) : bearer_token
       @region = region || Rito.region
       @limiter = rate_limiter || Rito.rate_limiter || RateLimiting::AdaptiveLimiter.new
       @max_retries = max_retries || Rito.max_retries
@@ -92,16 +95,38 @@ module Rito
       Endpoints::Riftbound.new(self)
     end
 
-    def request(method, path, routing_kind:, routing_value: nil, params: {}, body: nil)
+    def request(method, path, routing_kind:, routing_value: nil, regions: nil, params: {}, body: nil)
       region = Routing.resolve(routing_kind, routing_value || @region)
+      raise ArgumentError, "#{region.inspect} is not supported by this endpoint" if regions && !regions.include?(region)
+
       connection = @connection.for_host(Routing.host_for(region))
+      context = { attempts: 0 }
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      url = connection.build_url(path, params).to_s
       response = connection.run_request(method, path, body, {}) do |req|
+        req.options.context = context
         req.params.update(params) unless params.empty?
       end
-      # 5xx responses reaching here are final: faraday-retry has exhausted
-      # its retries (or the status was not retryable).
+      # Transport errors and final 5xx must be converted after Faraday's retries.
       raise_server_error!(response) if response.status >= 500
       response
+    rescue Faraday::ConnectionFailed => e
+      raise ConnectionError.new('Connection failed', wrapped: e)
+    rescue Faraday::TimeoutError, ::Timeout::Error => e
+      raise TimeoutError.new('Request timed out', wrapped: e)
+    rescue Faraday::SSLError => e
+      raise SSLError.new('TLS connection failed', wrapped: e)
+    ensure
+      if context && context[:attempts].positive?
+        error = $ERROR_INFO
+        Instrumentation.emit(
+          http_method: method, url: url,
+          status: response&.status || (error.status if error.respond_to?(:status)),
+          attempts: context[:attempts],
+          duration_ms: ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started) * 1000).round(2),
+          error: error&.class&.name
+        )
+      end
     end
 
     private
@@ -114,7 +139,11 @@ module Rito
 
     def validate!
       raise ConfigError, 'api_key or bearer_token is required' if @api_key.to_s.empty? && @bearer_token.to_s.empty?
-      return if Routing.platform?(@region) || Routing.regional?(@region)
+      if @api_key && @bearer_token
+        raise ConfigError, 'configure either api_key or bearer_token; use separate clients for API and RSO requests'
+      end
+      return if Routing.platform?(@region) || Routing.regional?(@region) ||
+                Routing::VALORANT_PLATFORMS.include?(Routing.normalize(@region))
 
       raise ConfigError, "unknown region: #{@region.inspect}"
     end

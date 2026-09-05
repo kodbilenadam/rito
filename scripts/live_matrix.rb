@@ -96,7 +96,9 @@ def build_probes(fix)
     ['league-v4 grandmaster', ->(c) { c.leagues.grandmaster('RANKED_SOLO_5x5', region: :kr) }, false],
     ['league-v4 master', ->(c) { c.leagues.master('RANKED_SOLO_5x5', region: :kr) }, false],
     ['league-v4 entries-by-puuid', ->(c) { c.leagues.entries_by_puuid(puuid, region: :kr) }, true],
-    ['league-v4 entries tier/div', ->(c) { c.leagues.entries('DIAMOND', 'I', page: 1, region: :kr) }, false],
+    ['league-v4 entries tier/div', lambda { |c|
+      c.leagues.entries('RANKED_SOLO_5x5', 'DIAMOND', 'I', page: 1, region: :kr)
+    }, false],
     ['league-exp-v4 entries', ->(c) { c.league_exp.entries('RANKED_SOLO_5x5', 'CHALLENGER', 'I', region: :kr) }, false],
     ['lol-status-v4 platform-data', ->(c) { c.lol_status.platform_data(region: :kr) }, false],
     ['spectator-v5 active-game', ->(c) { c.spectator.active_game(puuid, region: :kr) }, false],
@@ -113,11 +115,11 @@ def build_probes(fix)
       c.challenges.leaderboard(101_200, 'GRANDMASTER', limit: 1, region: :kr)
     }, false],
     ['challenges player-data', ->(c) { c.challenges.player_data(puuid, region: :kr) }, false],
-    ['tournament-v5 code (read)', ->(c) { c.tournaments.code(FAKE_CODE, region: :kr) }, true],
-    ['tournament-v5 games-by-code', ->(c) { c.tournaments.games_by_code(FAKE_CODE, region: :kr) }, true],
-    ['tournament-v5 lobby-events', ->(c) { c.tournaments.lobby_events(FAKE_CODE, region: :kr) }, true],
-    ['tournament-stub code (read)', ->(c) { c.tournament_stub.code(FAKE_CODE, region: :kr) }, true],
-    ['tournament-stub lobby-events', ->(c) { c.tournament_stub.lobby_events(FAKE_CODE, region: :kr) }, true],
+    ['tournament-v5 code (read)', ->(c) { c.tournaments.code(FAKE_CODE, region: :americas) }, true],
+    ['tournament-v5 games-by-code', ->(c) { c.tournaments.games_by_code(FAKE_CODE, region: :americas) }, true],
+    ['tournament-v5 lobby-events', ->(c) { c.tournaments.lobby_events(FAKE_CODE, region: :americas) }, true],
+    ['tournament-stub code (read)', ->(c) { c.tournament_stub.code(FAKE_CODE, region: :americas) }, true],
+    ['tournament-stub lobby-events', ->(c) { c.tournament_stub.lobby_events(FAKE_CODE, region: :americas) }, true],
     ['tft summoner by-puuid', ->(c) { c.tft.summoner.by_puuid(puuid, region: :kr) }, true],
     ['tft leagues challenger', ->(c) { c.tft.leagues.challenger(region: :kr) }, false],
     ['tft leagues entries-by-puuid', ->(c) { c.tft.leagues.entries_by_puuid(puuid, region: :kr) }, true],

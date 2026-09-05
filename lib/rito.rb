@@ -2,6 +2,7 @@
 
 # stdlib
 require 'json'
+require 'English'
 require 'uri'
 require 'erb/util'
 
@@ -25,6 +26,7 @@ require_relative 'rito/middleware/riot_errors'
 require_relative 'rito/connection'
 require_relative 'rito/instrumentation'
 require_relative 'rito/client'
+require_relative 'rito/models'
 require_relative 'rito/rso'
 require_relative 'rito/models/account'
 require_relative 'rito/models/summoner'

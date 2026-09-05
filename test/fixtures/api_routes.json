@@ -1,0 +1,1319 @@
+{
+  "source": "https://www.mingweisamuel.com/riotapi-schema/openapi-3.0.0.min.json",
+  "version": "651fd42a1af69dc0c8a3458d7013aab1271dadb6",
+  "operations": [
+    {
+      "method": "get",
+      "path": "/riot/account/v1/accounts/by-puuid/{puuid}",
+      "regions": [
+        "americas",
+        "asia",
+        "europe"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}",
+      "regions": [
+        "americas",
+        "asia",
+        "europe"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/riot/account/v1/accounts/me",
+      "regions": [
+        "americas",
+        "asia",
+        "europe"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/riot/account/v1/active-shards/by-game/{game}/by-puuid/{puuid}",
+      "regions": [
+        "americas",
+        "asia",
+        "europe"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/riot/account/v1/region/by-game/{game}/by-puuid/{puuid}",
+      "regions": [
+        "americas",
+        "asia",
+        "europe"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}/by-champion/{championId}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}/top",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": [
+        "count"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/champion-mastery/v4/scores/by-puuid/{encryptedPUUID}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/platform/v3/champion-rotations",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/clash/v1/players/by-puuid/{puuid}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/clash/v1/teams/{teamId}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/clash/v1/tournaments",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/clash/v1/tournaments/by-team/{teamId}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/clash/v1/tournaments/{tournamentId}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/league-exp/v4/entries/{queue}/{tier}/{division}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": [
+        "page"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/league/v4/challengerleagues/by-queue/{queue}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/league/v4/entries/by-puuid/{encryptedPUUID}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/league/v4/entries/{queue}/{tier}/{division}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": [
+        "page"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/league/v4/grandmasterleagues/by-queue/{queue}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/league/v4/masterleagues/by-queue/{queue}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/challenges/v1/challenges/config",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "pbe1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/challenges/v1/challenges/percentiles",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "pbe1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/challenges/v1/challenges/{challengeId}/config",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "pbe1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/challenges/v1/challenges/{challengeId}/leaderboards/by-level/{level}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "pbe1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": [
+        "limit"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/challenges/v1/challenges/{challengeId}/percentiles",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "pbe1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/challenges/v1/player-data/{puuid}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "pbe1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/rso-match/v1/matches/ids",
+      "regions": [
+        "americas",
+        "asia",
+        "europe",
+        "sea"
+      ],
+      "query": [
+        "count",
+        "endTime",
+        "queue",
+        "start",
+        "startTime",
+        "type"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/rso-match/v1/matches/{matchId}",
+      "regions": [
+        "americas",
+        "asia",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/rso-match/v1/matches/{matchId}/timeline",
+      "regions": [
+        "americas",
+        "asia",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/status/v4/platform-data",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "pbe1",
+        "ru",
+        "sg2",
+        "tr1",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lor/deck/v1/decks/me",
+      "regions": [
+        "americas",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "post",
+      "path": "/lor/deck/v1/decks/me",
+      "regions": [
+        "americas",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lor/inventory/v1/cards/me",
+      "regions": [
+        "americas",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lor/match/v1/matches/by-puuid/{puuid}/ids",
+      "regions": [
+        "americas",
+        "apac",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lor/match/v1/matches/{matchId}",
+      "regions": [
+        "americas",
+        "apac",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lor/ranked/v1/leaderboards",
+      "regions": [
+        "americas",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lor/status/v1/platform-data",
+      "regions": [
+        "americas",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/match/v5/matches/by-puuid/{puuid}/ids",
+      "regions": [
+        "americas",
+        "asia",
+        "europe",
+        "sea"
+      ],
+      "query": [
+        "count",
+        "endTime",
+        "queue",
+        "start",
+        "startTime",
+        "type"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/match/v5/matches/by-puuid/{puuid}/replays",
+      "regions": [
+        "americas",
+        "asia",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/match/v5/matches/{matchId}",
+      "regions": [
+        "americas",
+        "asia",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/match/v5/matches/{matchId}/timeline",
+      "regions": [
+        "americas",
+        "asia",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/riftbound/content/v1/contents",
+      "regions": [
+        "americas",
+        "asia",
+        "europe"
+      ],
+      "query": [
+        "locale"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/spectator/tft/v5/active-games/by-puuid/{encryptedPUUID}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/spectator/v5/active-games/by-summoner/{encryptedPUUID}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/summoner/v4/summoners/me",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/tft/league/v1/by-puuid/{puuid}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/tft/league/v1/challenger",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": [
+        "queue"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/tft/league/v1/entries/{tier}/{division}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": [
+        "page",
+        "queue"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/tft/league/v1/grandmaster",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": [
+        "queue"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/tft/league/v1/master",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": [
+        "queue"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/tft/league/v1/rated-ladders/{queue}/top",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/tft/match/v1/matches/by-puuid/{puuid}/ids",
+      "regions": [
+        "americas",
+        "asia",
+        "esports",
+        "esportseu",
+        "europe",
+        "sea"
+      ],
+      "query": [
+        "count",
+        "endTime",
+        "start",
+        "startTime"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/tft/match/v1/matches/{matchId}",
+      "regions": [
+        "americas",
+        "asia",
+        "esports",
+        "esportseu",
+        "europe",
+        "sea"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/tft/status/v1/platform-data",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "pbe1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/tft/summoner/v1/summoners/by-puuid/{encryptedPUUID}",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/tft/summoner/v1/summoners/me",
+      "regions": [
+        "br1",
+        "eun1",
+        "euw1",
+        "jp1",
+        "kr",
+        "la1",
+        "la2",
+        "me1",
+        "na1",
+        "oc1",
+        "ru",
+        "sg2",
+        "tr1",
+        "tw2",
+        "vn2"
+      ],
+      "query": []
+    },
+    {
+      "method": "post",
+      "path": "/lol/tournament-stub/v5/codes",
+      "regions": [
+        "americas"
+      ],
+      "query": [
+        "count",
+        "tournamentId"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/tournament-stub/v5/codes/{tournamentCode}",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/tournament-stub/v5/lobby-events/by-code/{tournamentCode}",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "post",
+      "path": "/lol/tournament-stub/v5/providers",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "post",
+      "path": "/lol/tournament-stub/v5/tournaments",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "post",
+      "path": "/lol/tournament/v5/codes",
+      "regions": [
+        "americas"
+      ],
+      "query": [
+        "count",
+        "tournamentId"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/lol/tournament/v5/codes/{tournamentCode}",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "put",
+      "path": "/lol/tournament/v5/codes/{tournamentCode}",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/tournament/v5/games/by-code/{tournamentCode}",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/lol/tournament/v5/lobby-events/by-code/{tournamentCode}",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "post",
+      "path": "/lol/tournament/v5/providers",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "post",
+      "path": "/lol/tournament/v5/tournaments",
+      "regions": [
+        "americas"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/val/match/console/v1/matches/{matchId}",
+      "regions": [
+        "ap",
+        "br",
+        "eu",
+        "latam",
+        "na"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/val/match/console/v1/matchlists/by-puuid/{puuid}",
+      "regions": [
+        "ap",
+        "br",
+        "eu",
+        "latam",
+        "na"
+      ],
+      "query": [
+        "platformType"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/val/match/console/v1/recent-matches/by-queue/{queue}",
+      "regions": [
+        "ap",
+        "br",
+        "eu",
+        "latam",
+        "na"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/val/console/ranked/v1/leaderboards/by-act/{actId}",
+      "regions": [
+        "ap",
+        "eu",
+        "na"
+      ],
+      "query": [
+        "platformType",
+        "size",
+        "startIndex"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/val/content/v1/contents",
+      "regions": [
+        "ap",
+        "br",
+        "esports",
+        "eu",
+        "kr",
+        "latam",
+        "na"
+      ],
+      "query": [
+        "locale"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/val/match/v1/matches/{matchId}",
+      "regions": [
+        "ap",
+        "br",
+        "esports",
+        "eu",
+        "kr",
+        "latam",
+        "na"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/val/match/v1/matchlists/by-puuid/{puuid}",
+      "regions": [
+        "ap",
+        "br",
+        "esports",
+        "eu",
+        "kr",
+        "latam",
+        "na"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/val/match/v1/recent-matches/by-queue/{queue}",
+      "regions": [
+        "ap",
+        "br",
+        "esports",
+        "eu",
+        "kr",
+        "latam",
+        "na"
+      ],
+      "query": []
+    },
+    {
+      "method": "get",
+      "path": "/val/ranked/v1/leaderboards/by-act/{actId}",
+      "regions": [
+        "ap",
+        "br",
+        "eu",
+        "kr",
+        "latam",
+        "na"
+      ],
+      "query": [
+        "size",
+        "startIndex"
+      ]
+    },
+    {
+      "method": "get",
+      "path": "/val/status/v1/platform-data",
+      "regions": [
+        "ap",
+        "br",
+        "eu",
+        "kr",
+        "latam",
+        "na"
+      ],
+      "query": []
+    }
+  ]
+}

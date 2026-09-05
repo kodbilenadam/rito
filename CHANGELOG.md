@@ -1,5 +1,32 @@
 # Changelog
 
+## Unreleased
+
+- **Breaking:** LoL `leagues.entries` now requires `queue` before `tier` and
+  `division`, matching the live API path.
+- Tournament and tournament-stub requests route to `americas`; `na1` escalates
+  automatically, and unsupported clusters are rejected.
+- Account routing normalizes SEA platform values (including `sg2`) to `asia`.
+  VALORANT routing values work as client defaults.
+- Explicit API-key or bearer credentials no longer inherit the other global
+  credential. Explicit `nil` clears credentials; mixed credentials are rejected.
+- Transport failures retry before conversion to Rito errors. Non-JSON HTTP
+  error bodies preserve the HTTP error class; 403 hints include routing and access.
+  Retried 429 POSTs preserve their original request body.
+- Rate-limit buckets isolate API families. Headerless 429 backoff grows
+  exponentially, learned windows survive expiry, deadlines do not slide with
+  responses, and older counts do not erase in-flight reservations. Application
+  and method quota are acquired together.
+- Redis quota checks reserve all windows atomically, preserve counter TTLs,
+  accept zero Retry-After, retain longer blocks, and back off across workers.
+- Request instrumentation emits one completion event for successes and errors,
+  including bearer requests, with total network attempts and elapsed time.
+- Model fields and raw payloads are recursively frozen. Documentation identifies
+  endpoints returning parsed JSON and replaces removed method examples.
+- Added a schema snapshot contract test, live-path regressions, retry and
+  instrumentation tests, and Redis concurrency coverage. Explicitly configured
+  Redis must be available for tests.
+
 ## 0.3.1 (2026-09-05)
 
 Fixed endpoint diffs against the current riotapi-schema (last generated

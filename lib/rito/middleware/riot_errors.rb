@@ -14,29 +14,11 @@ module Rito
         415 => Rito::UnsupportedMediaType
       }.freeze
 
-      # 403 from Riot almost always means the key is bad, and dev keys
-      # expire every 24h — users never guess this from a bare "Forbidden".
-      KEY_STALENESS_HINT = ' (check the API key: dev keys expire every 24h)'
+      FORBIDDEN_HINT = ' (check routing, product access, and the API key: dev keys expire every 24h)'
 
       def initialize(app, client:)
         super(app)
         @client = client
-      end
-
-      def call(env)
-        @app.call(env).on_complete { |completed| on_complete(completed) }
-      rescue Faraday::RetriableResponse => e
-        response = e.response
-        raise error_class_for(response.status).new(
-          "#{response.status} (after transport retries)",
-          response: response
-        )
-      rescue Faraday::ConnectionFailed => e
-        raise Rito::ConnectionError.new("#{e.class}: #{e.message}", wrapped: e)
-      rescue Faraday::TimeoutError, Timeout::Error => e
-        raise Rito::TimeoutError.new("#{e.class}: #{e.message}", wrapped: e)
-      rescue Faraday::SSLError => e
-        raise Rito::SSLError.new("#{e.class}: #{e.message}", wrapped: e)
       end
 
       def on_complete(env)
@@ -72,14 +54,21 @@ module Rito
         end
       end
 
+      def parse_body(body)
+        body = JSON.parse(body) if body.is_a?(String) && !body.empty?
+        body.is_a?(Hash) ? body : {}
+      rescue JSON::ParserError
+        {}
+      end
+
       def message(env)
-        parsed = env.response_body
-        parsed = JSON.parse(parsed) if parsed.is_a?(String) && !parsed.empty?
-        detail = parsed.is_a?(Hash) ? (parsed['message'] || parsed.dig('status', 'message')) : nil
+        parsed = parse_body(env.response_body)
+        status = parsed['status']
+        detail = parsed['message'] || (status['message'] if status.is_a?(Hash))
 
         base = "#{env.status} #{env.method.to_s.upcase} #{env.url}"
         text = detail ? "#{base}: #{detail}" : base
-        text += KEY_STALENESS_HINT if env.status == 403
+        text += FORBIDDEN_HINT if env.status == 403
         text
       end
     end

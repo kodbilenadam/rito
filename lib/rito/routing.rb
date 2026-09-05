@@ -71,11 +71,11 @@ module Rito
       end
 
       def regional_for_account(value)
-        v = normalize(value)
+        v = resolve(:regional, value)
+        v = 'asia' if v == 'sea'
         return v if ACCOUNT_REGIONALS.include?(v)
-        return 'asia' if v == 'sea'
 
-        resolve(:regional, v)
+        raise ArgumentError, "#{value.inspect} is not usable as an account routing value"
       end
     end
   end

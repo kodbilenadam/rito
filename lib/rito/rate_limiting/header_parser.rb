@@ -12,7 +12,9 @@ module Rito
           limit, window = part.strip.split(':', 2)
           next if limit.nil? || window.nil?
 
-          [Integer(limit), Integer(window)]
+          limit = Integer(limit)
+          window = Integer(window)
+          [limit, window] if limit >= 0 && window.positive?
         rescue ArgumentError
           next
         end

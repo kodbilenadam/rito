@@ -29,10 +29,10 @@ module Rito
             .map { |hash| Models::LeagueEntry.from_api(hash) }
         end
 
-        def entries(tier, division, page: nil, region: nil)
+        def entries(queue, tier, division, page: nil, region: nil)
           params = {}
           params['page'] = page if page
-          get("/lol/league/v4/entries/#{escape(tier)}/#{escape(division)}", region, params: params)
+          get("/lol/league/v4/entries/#{escape(queue)}/#{escape(tier)}/#{escape(division)}", region, params: params)
             .map { |hash| Models::LeagueEntry.from_api(hash) }
         end
       end

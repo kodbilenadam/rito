@@ -4,7 +4,7 @@ A modern, production-ready Ruby client for the Riot Games API: League of
 Legends, TFT, VALORANT, Legends of Runeterra, Riftbound, and the Riot Account API.
 
 Full routing-value handling, header-driven adaptive rate limiting, frozen
-`Data` models, and a single runtime dependency (Faraday).
+`Data` models, and Faraday transport with faraday-retry.
 
 ## Installation
 
@@ -42,7 +42,13 @@ Rito.rate_limiter   # rate limit strategy (default: AdaptiveLimiter)
 
 # per-client, for multi-key apps:
 client = Rito::Client.new(api_key: "RGAPI-...", region: :kr)
+rso_client = Rito::Client.new(bearer_token: access_token, region: :americas)
 ```
+
+Explicit credentials select API-key or bearer authentication without inheriting
+the other credential from global config. Use separate clients for API-key and
+RSO requests; configuring both credentials on one client raises `ConfigError`.
+Explicit `nil` clears a credential.
 
 ## Queues
 
@@ -178,9 +184,10 @@ limiter = Rito::RateLimiting::RedisLimiter.new(redis: Redis.new)
 client = Rito::Client.new(rate_limiter: limiter)
 ```
 
-Note: `acquire!` blocks the calling thread while throttled — fine in
-background jobs; in web requests prefer jobs or `max_retries: 0` with
-explicit `Rito::RateLimited` handling.
+`acquire!` blocks the calling thread while throttled, so use background jobs
+for work that must not block a web request. `max_retries: 0` disables retries;
+it does not disable pre-emptive waiting. `NullLimiter` disables limiter-based
+waiting entirely.
 
 ### Multi-process (Redis)
 
@@ -207,14 +214,23 @@ URL, and Riot's error detail.
 
 ## Models
 
-Responses are frozen `Data` objects. Documented fields are typed accessors;
-unknown fields Riot adds later are preserved in `.raw`:
+Account, summoner, LoL match, mastery, rotation, and league responses have
+`Data` models. Their mapped fields and `.raw` payloads are recursively frozen;
+unknown fields Riot adds later are preserved in `.raw`. Other endpoints return
+parsed JSON hashes, arrays, or scalar values, including timelines, status,
+Clash, challenges, tournaments, and most TFT, VALORANT, and LoR responses:
 
 ```ruby
-entry = client.leagues.entries_by_summoner_id(summoner_id).first
+entry = client.leagues.entries_by_puuid(puuid).first
 entry.tier      # => "DIAMOND"
 entry.winrate   # => 57.14
 entry.raw       # => full payload hash
+```
+
+League listings require a queue, tier, and division:
+
+```ruby
+client.leagues.entries("RANKED_SOLO_5x5", "DIAMOND", "I", page: 1)
 ```
 
 ## Coverage
@@ -244,7 +260,7 @@ against the right set per product. `esports` is a valid platform for
 VALORANT content/match and a valid regional for tft-match-v1 (with
 `esportseu`); `apac` is a valid regional for lor-match-v1. The
 tournament endpoints only exist on the `americas`
-platform — pass `region: :na1` or `:americas`.
+host — pass `region: :na1` or `:americas`. Other regional clusters are rejected.
 
 ## Testing your own app
 
@@ -257,8 +273,11 @@ bundle exec rake test
 
 ## Instrumentation
 
-If ActiveSupport is present (e.g. in a Rails app), every request emits a
-`request.rito` notification:
+If ActiveSupport is present (e.g. in a Rails app), each `Rito::Client` request
+emits one `request.rito` notification after it completes, including failures
+and bearer requests. `attempts` counts network attempts across transport and
+429 retries; `duration_ms` includes retry and limiter waits. Configuration and
+routing errors that prevent a request do not emit an event:
 
 ```ruby
 ActiveSupport::Notifications.subscribe("request.rito") do |*, payload|
@@ -275,10 +294,24 @@ Without ActiveSupport, instrumentation is a no-op.
 
 ```
 bundle install
+bundle exec rake lint
 bundle exec rake test
 ```
 
-Ruby 3.2+ required (`Data.define`).
+Ruby 3.2+ required (`Data.define`). Redis tests use `REDIS_URL` when set and
+fail if that configured Redis is unavailable; otherwise they try localhost
+and skip if it is unavailable.
+
+The endpoint contract test uses a checked-in snapshot of riotapi-schema
+(paths, routing hosts, and query parameters). Refresh it with
+`bundle exec rake api_routes`, review the diff, and run the suite.
+
+Live read-only checks use `bundle exec ruby scripts/live_matrix.rb` with
+`RIOT_API_KEY_TEST` and `RIOT_API_KEY_PROD` in `.env`. Access varies by key and
+product: a 403 can indicate missing product access or an incorrect path/host,
+as well as an expired key. API keys cannot validate RSO-only endpoints;
+those need an RSO access token. Synthetic-id 404s establish no successful
+payload coverage.
 
 ## License
 

@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 04 Sep 2026 21:10:57 GMT
+      - Sat, 05 Sep 2026 00:29:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,9 +37,9 @@ http_interactions:
       Access-Control-Expose-Headers:
       - Content-Length,Content-Range
       Set-Cookie:
-      - __cf_bm=Mfbk3myX6OfchXtQse19IflFfDGI3n.2z8u15s3Ur8c-1788556257.4897313-1.0.1.1-5GbmlPMa6hi.kY.Pfqk7uANkD9O7ZlxcuBwQgZFTnbGutjvgXNsDRVbJnSijsc8h8ZXb0sBDxx37CEowukDEqn0wU.dQqkNq2gwTLbx76zyUUD69ddwNaCbaCqmzmcf2;
-        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Fri,
-        04 Sep 2026 21:40:57 GMT
+      - __cf_bm=WY4sdFjbV6z5AJsZ1miuaPyYtNtmOYml1O2lWTwtRWg-1788568193.5217628-1.0.1.1-DtMLsp8mrDUa3EiPLjaPI0bFxayXsD3wvsXLUz_ZzzNDpxfO38bBwbK7oMM45wtc8pZjxyfw1OIrg_UswsnNvkQwyIwDe4nBj5c5_bg5VOQwz5cchpx_x5ySGbKx_vso;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Sat,
+        05 Sep 2026 00:59:53 GMT
       Vary:
       - Accept-Encoding
       X-App-Rate-Limit:
@@ -55,10 +55,10 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - a35ffbe14ab1401a-SIN
+      - a3611f498bc4ce4f-SIN
     body:
       encoding: ASCII-8BIT
       string: '{"puuid":"hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA","gameName":"Hide
         on bush","tagLine":"KR1"}'
-  recorded_at: Fri, 04 Sep 2026 21:10:57 GMT
+  recorded_at: Sat, 05 Sep 2026 00:29:53 GMT
 recorded_with: VCR 6.4.0

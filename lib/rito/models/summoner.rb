@@ -15,7 +15,7 @@ module Rito
           profile_icon_id: hash['profileIconId'],
           revision_date: hash['revisionDate'],
           summoner_level: hash['summonerLevel'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end

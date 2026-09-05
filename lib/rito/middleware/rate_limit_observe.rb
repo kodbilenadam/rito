@@ -12,10 +12,10 @@ module Rito
 
       def on_complete(env)
         limiter = @client.limiter
-        return if limiter.nil? || @client.api_key.nil?
+        key = @client.api_key || @client.bearer_token
+        return if limiter.nil? || key.nil?
 
-        limiter.observe!(Faraday::Response.new(env), key: @client.api_key,
-                                                     region: region_from(env), bucket: bucket_from(env))
+        limiter.observe!(Faraday::Response.new(env), key: key, region: region_from(env), bucket: bucket_from(env))
       end
 
       private
@@ -25,7 +25,7 @@ module Rito
       end
 
       def bucket_from(env)
-        env.url.path.split('/').first(2).join('/')
+        env.url.path.split('/').reject(&:empty?).first(2).join('/')
       end
     end
   end

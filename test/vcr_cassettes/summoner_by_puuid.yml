@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 04 Sep 2026 21:10:58 GMT
+      - Sat, 05 Sep 2026 00:29:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,9 +37,9 @@ http_interactions:
       Access-Control-Expose-Headers:
       - Content-Length,Content-Range
       Set-Cookie:
-      - __cf_bm=4PyvRWBSycxv_VL04eb8p0NoH0kOwPeot0HiB8iaO7c-1788556257.921576-1.0.1.1-9g0utNK6SuekpAZ.MlOfVMqicwx_DFqD1fGB7ELQR1vwe1pfKmYQwA6CF7YS7pYaqNRQfJlaTu46b2oTSisFh7CEAbFrPTwsBtNxX4nNfQrolCLkWLen7bIcZLvn1ChK;
-        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Fri,
-        04 Sep 2026 21:40:58 GMT
+      - __cf_bm=TQORaJOEQ4lpbxd8o.NK5kQWOzQp61B3fAItoXQjJOQ-1788568193.8149078-1.0.1.1-8qwIuEF.KYxj6Ta7Oy5gYGer2YkQMviKtGdupZl2l1x9Be7MbDXqsqNIw6jKb9jJy7UZulhVUEj7eQtrWUr5TRpn7JbdG2wTy0W2hF6gVufPjYTpHl4gfbUDJzbqyxWc;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Sat,
+        05 Sep 2026 00:59:53 GMT
       Vary:
       - Accept-Encoding
       X-App-Rate-Limit:
@@ -55,12 +55,12 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - a35ffbe40e615c98-SIN
+      - a3611f4b5f48fdb8-SIN
     body:
       encoding: ASCII-8BIT
       string: '{"puuid":"hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA","gameName":"Hide
         on bush","tagLine":"KR1"}'
-  recorded_at: Fri, 04 Sep 2026 21:10:57 GMT
+  recorded_at: Sat, 05 Sep 2026 00:29:53 GMT
 - request:
     method: get
     uri: https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA
@@ -82,7 +82,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 04 Sep 2026 21:10:58 GMT
+      - Sat, 05 Sep 2026 00:29:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -100,9 +100,9 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Set-Cookie:
-      - __cf_bm=EAwNygstGMrb1wKrMszoLy6U0SDTt3l7fPUwKxXIlTA-1788556258.2986946-1.0.1.1-iY6ZZlQySG.rsdU14POhyDoCpDgJg4BZnyo92.f0BYpoivxjrpcBfV8Oqnvlc95nPx9UAGEqGbYHfbB9vEKl8sHPzksGU_hTsHpIM9NOhklh4_aof0B7GxAmLlriztBu;
-        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Fri,
-        04 Sep 2026 21:40:58 GMT
+      - __cf_bm=de.xlIoxkg3kNJvUFbQxuYJH7kfJ4Z052btQ6zmd.Tc-1788568194.225696-1.0.1.1-9hoEwMWurgzg34qKNveHQilk7UT7GNUXwsItehjho2oCpiz2btppWj9xH0L1gGN.VcARaWGX0bIwhlx4RwIABOibrVpKZhiOg1AuGQqKr_N52_wQUdbip_xKTjz7nSPG;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.riotgames.com; Expires=Sat,
+        05 Sep 2026 00:59:54 GMT
       Expires:
       - '0'
       Pragma:
@@ -129,9 +129,9 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - a35ffbe65e808241-SIN
+      - a3611f4dec8b8357-SIN
     body:
       encoding: ASCII-8BIT
-      string: '{"puuid":"hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA","profileIconId":6,"revisionDate":1788543886621,"summonerLevel":931}'
-  recorded_at: Fri, 04 Sep 2026 21:10:58 GMT
+      string: '{"puuid":"hii8ySibjXVzhOmvyX2VLEerC4kB_Xl0iNyZA6uPRR7TOldsB6d0AnVct4drlsTSny40PQM5IGFhhA","profileIconId":6,"revisionDate":1788543891000,"summonerLevel":931}'
+  recorded_at: Sat, 05 Sep 2026 00:29:54 GMT
 recorded_with: VCR 6.4.0

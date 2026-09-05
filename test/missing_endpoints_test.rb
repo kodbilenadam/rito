@@ -118,7 +118,7 @@ class NewLolEndpointsTest < Minitest::Test
   end
 
   def test_tournament_games_by_code
-    stub = stub_request(:get, 'https://na1.api.riotgames.com/lol/tournament/v5/games/by-code/CODE1')
+    stub = stub_request(:get, 'https://americas.api.riotgames.com/lol/tournament/v5/games/by-code/CODE1')
            .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
                       body: '[{"gameId":42}]')
 

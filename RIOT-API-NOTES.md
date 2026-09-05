@@ -34,7 +34,7 @@ Gotchas encoded into the gem:
 ## 1.2 Auth
 
 - Production/personal keys: header `X-Riot-Token: <key>`.
-- RSO / OAuth endpoints (`/accounts/me`, `lol-rso-match-v1`, `lor-deck-v1`): header `Authorization: Bearer <accessToken>`. The gem supports a key **or** a bearer token per client; `accounts/me`-style endpoints accept a per-call token override.
+- RSO / OAuth endpoints (`/accounts/me`, `lol-rso-match-v1`, `lor-deck-v1`): header `Authorization: Bearer <accessToken>`. The gem supports a key **or** a bearer token per client. Use a separate bearer client for RSO endpoints; explicit credentials do not inherit the other credential from global config.
 
 ## 1.3 Rate limiting model
 
@@ -66,7 +66,7 @@ Hard rules the gem follows:
 - `Retry-After` present ⇒ block for that duration (app-level ⇒ block all requests for the region; method-level ⇒ block only that endpoint bucket).
 - `Retry-After` absent ⇒ exponential backoff with jitter (base 1s, factor 2, cap ~32s), bounded by `max_retries`.
 - Service-level 429 (no type header) ⇒ back off only the endpoint+region, with a conservative default delay (1–2s).
-- Counts from `*-Count` headers are authoritative for the window: the limiter syncs its local counters to them on every response, keeping multi-process consumers roughly aligned.
+- Counts from `*-Count` headers update the current window without lowering existing reservations: delayed responses must not erase in-flight requests. Counter synchronization preserves the window deadline.
 
 ## 1.4 Response behavior & dynamic endpoints
 
@@ -92,24 +92,28 @@ Hard rules the gem follows:
 
 ## 1.6 Live-tested key behavior (2026-09, `scripts/live_matrix.rb`)
 
-Findings from probing every endpoint with both a development key and a
-production personal key (fixtures bootstrapped from `Hide on bush#KR1`):
+Findings from the read-only matrix and corrected-path controls using the configured
+development and production keys (fixtures bootstrapped from `Hide on bush#KR1`):
 
 - **PUUIDs are encrypted per API key.** A puuid minted by one key
   (`by-riot-id`) cannot be read by another key — Riot answers
   `400 "Bad Request - Exception decrypting <puuid>"` on every
   puuid-in-path endpoint. Bootstrap fixtures with the same key you
   query with. Numeric ids (match ids, tournament ids) are not encrypted.
-- **Product entitlements gate whole products with a bare 403** (no
-  message detail), identically for dev and personal prod keys:
-  TFT (tft-*), VALORANT (val-*, incl. console), LoR (lor-*),
-  Riftbound, tournament-v5 **and** tournament-stub-v5 (need the
-  tournament key product), and account-v1 active-shards.
-- **`league-v4 entries/{tier}/{division}` is 403 for personal keys**
-  while `league-exp-v4 entries/...` works — Riot restricts the
-  full-ladder listing endpoint; use league-exp for ladder browsing.
-- tournament-v5/stub read endpoints 403 for non-tournament keys even
-  for a syntactically invalid code; there is no "reachable" signal
-  without the tournament product.
+- **Product access remains unverified** for TFT, VALORANT (including console),
+  LoR, Riftbound, and account active-shards: both configured keys returned 403.
+  Direct HTTP controls for each game also returned 403. These responses alone
+  cannot establish successful endpoint or payload coverage.
+- **LoL league entries require the queue path segment.** The malformed
+  `/lol/league/v4/entries/{tier}/{division}` returned 403, while
+  `/lol/league/v4/entries/{queue}/{tier}/{division}` returned 200 with both keys.
+  The earlier attribution to personal-key restrictions was incorrect.
+- **Tournament endpoints use the `americas` host.** Tournament-stub code
+  lookup returned 200 on `americas` with both keys, including a synthetic code;
+  the same lookup on `kr` returned 403. Tournament-v5 still returned 403 on
+  the correct host, so production tournament access remains unverified.
+- **Account routing must normalize after platform escalation.** An account
+  lookup routed through `sg2` to `sea` returned 403; the identical lookup on
+  `asia` returned 200 with both keys.
 - RSO endpoints (all `/me`, `lol-rso-match-v1`, `lor-deck-v1`,
   `lor-inventory-v1`) need an RSO bearer token, not an API key.

@@ -13,6 +13,11 @@ task :cassettes do
   ruby 'scripts/record_cassettes.rb'
 end
 
+desc 'Refresh the API contract snapshot from riotapi-schema'
+task :api_routes do
+  ruby 'scripts/update_api_routes.rb'
+end
+
 desc 'Run rubocop'
 task :lint do
   sh 'bundle exec rubocop'

@@ -18,7 +18,7 @@ module Rito
         @limited_streak = 0
       end
 
-      def apply!(limits:, counts:)
+      def apply!(limits:, counts:, limited: false)
         @mutex.synchronize do
           now = @clock.call
           if limits.any?
@@ -28,12 +28,12 @@ module Rito
               {
                 limit: limit,
                 window: window,
-                reset_at: now + window,
-                count: counts_by_window.fetch(window) { previous&.fetch(:count) || 0 }
+                reset_at: previous&.fetch(:reset_at) || now + window,
+                count: [counts_by_window.fetch(window, 0), previous&.fetch(:count) || 0].max
               }
             end
           end
-          @limited_streak = 0
+          @limited_streak = 0 unless limited
         end
       end
 
@@ -43,33 +43,32 @@ module Rito
       def limit_block!(retry_after)
         @mutex.synchronize do
           now = @clock.call
-          @limited_streak += 1
-          delay = retry_after || [@limited_streak * DEFAULT_BACKOFF, MAX_BACKOFF].min
-          delay += rand * JITTER
+          @limited_streak = [@limited_streak + 1, 6].min
+          delay = retry_after || [2**(@limited_streak - 1) * DEFAULT_BACKOFF, MAX_BACKOFF].min
+          delay += rand * JITTER unless retry_after
           until_time = now + delay
           @blocked_until = until_time if @blocked_until.nil? || @blocked_until < until_time
         end
       end
 
+      def delay
+        @mutex.synchronize { delay_unlocked }
+      end
+
+      def consume!
+        @mutex.synchronize { @windows.each { |window| window[:count] += 1 } }
+      end
+
       def wait_until_allowed!
         loop do
-          delay = nil
-          @mutex.synchronize do
-            now = @clock.call
-            if @blocked_until && @blocked_until > now
-              delay = @blocked_until - now
-            else
-              @windows.reject! { |w| w[:reset_at] <= now }
-              violating = @windows.find { |w| w[:count] >= w[:limit] }
-              if violating
-                delay = violating[:reset_at] - now
-              else
-                @windows.each { |w| w[:count] += 1 }
-                return
-              end
+          wait = @mutex.synchronize do
+            delay_unlocked.tap do |value|
+              @windows.each { |window| window[:count] += 1 } if value.zero?
             end
           end
-          @sleeper.call(delay + 0.001)
+          return if wait.zero?
+
+          @sleeper.call(wait + 0.001)
         end
       end
 
@@ -77,6 +76,22 @@ module Rito
         @mutex.synchronize do
           @blocked_until && @blocked_until > @clock.call
         end
+      end
+
+      private
+
+      def delay_unlocked
+        now = @clock.call
+        @windows.each do |window|
+          next if window[:reset_at] > now
+
+          window[:count] = 0
+          window[:reset_at] = now + window[:window]
+        end
+        delays = @windows.filter_map do |window|
+          window[:reset_at] - now if window[:count] >= window[:limit]
+        end
+        [0, (@blocked_until || now) - now, *delays].max
       end
     end
   end

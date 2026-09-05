@@ -11,7 +11,7 @@ module Rito
         new(
           metadata: MatchMetadata.from_api(hash['metadata']),
           info: MatchInfo.from_api(hash['info']),
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end
@@ -23,7 +23,7 @@ module Rito
         new(
           match_id: hash['matchId'],
           participants: hash['participants'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end
@@ -48,9 +48,9 @@ module Rito
           game_type: hash['gameType'],
           game_version: hash['gameVersion'],
           map_id: hash['mapId'],
-          participants: hash['participants']&.map { |p| MatchParticipant.from_api(p) },
+          participants: hash['participants']&.map { |p| MatchParticipant.from_api(p) }&.freeze,
           queue_id: hash['queueId'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end
@@ -67,7 +67,7 @@ module Rito
           summoner_name: hash['summonerName'],
           team_id: hash['teamId'],
           win: hash['win'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end
@@ -77,7 +77,7 @@ module Rito
         new(
           total: hash['total'],
           match_file_urls: hash['matchFileURLs'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end

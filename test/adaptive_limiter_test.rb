@@ -106,13 +106,59 @@ class AdaptiveLimiterTest < Minitest::Test
     @limiter.acquire!(key: 'key', region: 'na1', bucket: 'lol/summoner')
   end
 
-  def test_backoff_grows_without_retry_after
+  def test_backoff_grows_without_retry_after_and_resets_after_success
+    [1, 2, 4, 8, 16, 32, 32].each do |minimum|
+      before = @waited
+      observe(429, {})
+      @limiter.acquire!(key: 'key', region: 'na1', bucket: 'lol/summoner')
+      assert_operator @waited - before, :>=, minimum
+      assert_operator @waited - before, :<, minimum + 0.502
+    end
+    observe(200, {})
+    before = @waited
     observe(429, {})
-    observe(429, {})
-    observe(429, {})
+    @limiter.acquire!(key: 'key', region: 'na1', bucket: 'lol/summoner')
+    assert_operator @waited - before, :<, 1.502
+  end
 
-    @now = 0.5
-    assert @limiter.bucket_blocked?(key: 'key', region: 'na1', bucket: 'lol/summoner', scope: :method)
+  def test_window_deadlines_do_not_slide_with_each_response
+    observe(200, { 'X-App-Rate-Limit' => '2:10', 'X-App-Rate-Limit-Count' => '1:10' })
+    @now = 8.0
+    observe(200, { 'X-App-Rate-Limit' => '2:10', 'X-App-Rate-Limit-Count' => '2:10' })
+    @limiter.acquire!(key: 'key', region: 'na1', bucket: 'lol/summoner')
+    assert_in_delta 2.001, @waited, 0.001
+  end
+
+  def test_limits_remain_known_after_a_window_expires
+    observe(200, { 'X-App-Rate-Limit' => '1:10', 'X-App-Rate-Limit-Count' => '1:10' })
+    3.times { @limiter.acquire!(key: 'key', region: 'na1', bucket: 'lol/summoner') }
+    assert_in_delta 30.003, @waited, 0.001
+  end
+
+  def test_out_of_order_counts_do_not_restore_quota
+    observe(200, { 'X-App-Rate-Limit' => '2:10', 'X-App-Rate-Limit-Count' => '2:10' })
+    observe(200, { 'X-App-Rate-Limit' => '2:10', 'X-App-Rate-Limit-Count' => '1:10' })
+    @limiter.acquire!(key: 'key', region: 'na1', bucket: 'lol/summoner')
+    assert_operator @waited, :>=, 10
+  end
+
+  def test_waiting_for_method_quota_does_not_reserve_application_quota
+    other_call = false
+    limiter = nil
+    sleeper = lambda { |delay|
+      unless other_call
+        other_call = true
+        limiter.acquire!(key: 'key', region: 'na1', bucket: 'lol/status')
+      end
+      @now += delay
+    }
+    limiter = Rito::RateLimiting::AdaptiveLimiter.new(clock: -> { @now }, sleeper: sleeper)
+    limiter.observe!(@response.call(200, { 'X-App-Rate-Limit' => '1:100', 'X-App-Rate-Limit-Count' => '0:100',
+                                           'X-Method-Rate-Limit' => '1:10', 'X-Method-Rate-Limit-Count' => '1:10' }),
+                     key: 'key', region: 'na1', bucket: 'lol/summoner')
+    limiter.acquire!(key: 'key', region: 'na1', bucket: 'lol/summoner')
+    assert other_call
+    assert_in_delta 100.001, @now, 0.001
   end
 
   def test_concurrent_acquires_are_thread_safe

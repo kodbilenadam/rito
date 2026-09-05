@@ -8,7 +8,7 @@ module Rito
           puuid: hash['puuid'],
           game_name: hash['gameName'],
           tag_line: hash['tagLine'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end
@@ -19,7 +19,7 @@ module Rito
           puuid: hash['puuid'],
           game: hash['game'],
           active_shard: hash['activeShard'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end
@@ -30,7 +30,7 @@ module Rito
           puuid: hash['puuid'],
           game: hash['game'],
           region: hash['region'],
-          raw: hash.freeze
+          raw: Models.deep_freeze(hash)
         )
       end
     end

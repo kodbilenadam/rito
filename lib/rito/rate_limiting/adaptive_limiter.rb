@@ -15,8 +15,21 @@ module Rito
       end
 
       def acquire!(key:, region:, bucket:)
-        app_bucket(key, region).wait_until_allowed!
-        method_bucket(key, region, bucket).wait_until_allowed!
+        app = app_bucket(key, region)
+        method = method_bucket(key, region, bucket)
+        loop do
+          delay = @mutex.synchronize do
+            [app.delay, method.delay].max.tap do |wait|
+              if wait.zero?
+                app.consume!
+                method.consume!
+              end
+            end
+          end
+          return if delay.zero?
+
+          @sleeper.call(delay + 0.001)
+        end
       end
 
       def observe!(response, key:, region:, bucket:)
@@ -26,19 +39,15 @@ module Rito
         app = app_bucket(key, region)
         method = method_bucket(key, region, bucket)
 
-        app.apply!(limits: HeaderParser.app_limits(headers), counts: HeaderParser.app_counts(headers))
-        method.apply!(limits: HeaderParser.method_limits(headers), counts: HeaderParser.method_counts(headers))
-
-        return unless status == 429
-
-        retry_after = HeaderParser.retry_after(headers)
-        case HeaderParser.limit_type(headers)
-        when :application
-          app.limit_block!(retry_after)
-        when :method, :service
-          method.limit_block!(retry_after)
-        else
-          method.limit_block!(retry_after)
+        @mutex.synchronize do
+          app.apply!(limits: HeaderParser.app_limits(headers), counts: HeaderParser.app_counts(headers),
+                     limited: status == 429)
+          method.apply!(limits: HeaderParser.method_limits(headers), counts: HeaderParser.method_counts(headers),
+                        limited: status == 429)
+          if status == 429
+            target = HeaderParser.limit_type(headers) == :application ? app : method
+            target.limit_block!(HeaderParser.retry_after(headers))
+          end
         end
       end
 
