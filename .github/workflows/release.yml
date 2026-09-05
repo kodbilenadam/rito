@@ -49,6 +49,17 @@ jobs:
             exit 1
           }
 
+      - name: Extract release notes from CHANGELOG
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          awk -v ver="$TAG" '
+            found && /^## / { exit }
+            !found { if ($0 ~ "^## " ver "( |$)") found = 1; next }
+            { print }
+          ' CHANGELOG.md > release_notes.md
+          test -s release_notes.md || { echo "no CHANGELOG.md section for $TAG"; exit 1; }
+          cat release_notes.md
+
       - name: Leak check
         run: |
           if grep -rn "RGAPI-[0-9a-f]\{8\}-" --include="*.rb" --include="*.yml" . ; then
@@ -59,6 +70,6 @@ jobs:
       - uses: rubygems/release-gem@v1
 
       - name: Create GitHub release
-        run: gh release create "$GITHUB_REF_NAME" --title "rito $GITHUB_REF_NAME" --generate-notes
+        run: gh release create "$GITHUB_REF_NAME" --title "rito $GITHUB_REF_NAME" --notes-file release_notes.md
         env:
           GH_TOKEN: ${{ github.token }}
